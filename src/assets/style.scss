@@ -1,0 +1,21 @@
+@import './reset.scss';
+
+@import url(../../src/assets/fonts/poppins/poppins.scss);
+@import url(../../src/assets/fonts/raleway/raleway.scss);
+@import url(../../src/assets/fonts/roboto/roboto.scss);
+
+
+body {
+  font-family: Raleway;
+  font-weight: 400;
+  color: #fff;
+  background: #1D2228;
+  max-width: 1366px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 0 15px;
+}

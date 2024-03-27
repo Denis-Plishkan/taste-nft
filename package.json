@@ -4,14 +4,16 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "deploy": "gh-pages -d build",
+    "dev": "vite --host",
+    "deploy": "vite build && gh-pages -d dist",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "sass": "^1.72.0",
+    "sass-loader": "^14.1.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },
