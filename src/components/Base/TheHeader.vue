@@ -5,10 +5,10 @@
       <UIInput></UIInput>
     </div>
 
-    <UIButton @click="openPopup"></UIButton>
+    <UIButton class="header__button" @click="openPopup" :class="{ 'disabled': isPopupSecondOpen }"></UIButton>
 
-    <UIPopup v-if="isPopupOpen" @closePopup="closePopup">
-      <svg @click="closePopup" class="popup__cross-icon">
+    <UIPopup class="popup__info-wallet" v-if="isPopupOpen" @closePopup="closePopup">
+      <svg @click="closePopup" class="popup__cross-icon popup__cross-icon-info">
         <use href="#cross"></use>
       </svg>
 
@@ -35,8 +35,8 @@
       <UIButton @click="openSecondPopup" class="did-wallet__button"/>
     </UIPopup>
 
-    <UIPopup v-if="isPopupSecondOpen" @closePopup="closeSecondPopup">
-      <svg @click="closeSecondPopup" class="popup__cross-icon">
+    <UIPopup class="popup__connect-wallet" v-if="isPopupSecondOpen" @closePopup="closeSecondPopup">
+      <svg @click="closeSecondPopup" class="popup__cross-icon popup__cross-icon-connect">
         <use href="#cross"></use>
       </svg>
 
@@ -64,19 +64,19 @@
 </template>
 
 <script setup>
-//..
+
 import UIInput from "@/components/UI/UIInput.vue";
 import UIButton from "@/components/UI/UIButton.vue";
 import UIPopup from "@/components/UI/UIPopup.vue";
 
 import { ref } from 'vue';
 
+
 const cards = [
   {number: 1, description: 'Описание что нужно сделать'},
   {number: 2, description: 'Описание что нужно сделать'},
   {number: 3, description: 'Описание что нужно сделать'},
 ]
-
 
 let isPopupOpen = ref(false);
 let isPopupSecondOpen = ref(false);
@@ -97,18 +97,21 @@ function closeSecondPopup() {
 }
 
 function openSecondPopup() {
+  const button = document.querySelector('.header__button');
+
   closePopup();
   isPopupSecondOpen.value = true;
 
   setTimeout(() => {
     closeSecondPopup();
+    button.classList.add('none');
   }, 2000);
-
 }
 
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/media-breakpoints.scss";
 
 .header {
   max-height: 100vh;
@@ -119,9 +122,9 @@ function openSecondPopup() {
   border-radius: 0 0 32px 32px;
   min-height: 56px;
   box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.05);
-  padding: 10px 24px;
+  padding: 5px 24px;
 
-  @media(max-width: 576px) {
+  @include media-breakpoint-down(xs) {
     padding: 10px;
   }
 
@@ -129,12 +132,22 @@ function openSecondPopup() {
     display: flex;
     align-items: center;
     gap: 26px;
-    width: calc(100% - 150px);
+    width: calc(100% - 142px);
 
-    @media(max-width: 576px) {
+    @include media-breakpoint-down(xs) {
       gap: 5px;
       width: calc(100% - 110px);
     }
+  }
+
+  &__button {
+    font-size: 12px;
+    padding: 10px 20px;
+
+    @include media-breakpoint-down(xs) {
+      padding: 10px 6px;
+    }
+
   }
 }
 

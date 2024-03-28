@@ -12,6 +12,9 @@
 </script>
 
 <style lang="scss">
+
+@import "@/assets/media-breakpoints.scss";
+
 .popup {
   position: absolute;
   top: 50%;
@@ -20,31 +23,75 @@
   background: #30363D;
   border-radius: 32px;
   box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.05);
-  padding: 45px 28px 28px 30px;
   min-width: 653px;
+
+  @include media-breakpoint-down(sm) {
+    height: 300px;
+    overflow: auto;
+    width: 90%;
+    min-width: unset;
+    padding: 32px 15px;
+  }
+
+  &__info-wallet {
+    padding: 76px 28px 28px 30px;
+
+    @include media-breakpoint-down(sm) {
+      padding-top: 34px;
+    }
+  }
+
+  &__connect-wallet {
+    padding: 53px 10px 65px 10px;
+    max-height: 222px;
+  }
 
   &__cross-icon {
     width: 16px;
     height: 16px;
     position: absolute;
-    top: 48px;
-    right: 34px;
     cursor: pointer;
+
+
+  }
+
+  &__cross-icon-info {
+    top: 79px;
+    right: 25px;
+
+    @include media-breakpoint-down(sm) {
+      top: 37px;
+    }
+
+    @include media-breakpoint-down(xxs) {
+      top: 10px;
+      right: 14px;
+    }
+  }
+
+  &__cross-icon-connect {
+    top: 56px;
+    right: 26px;
+
+    @include media-breakpoint-down(xxs) {
+      top: 10px;
+      right: 14px;
+    }
   }
 
   &__text {
     font-weight: 700;
     font-size: 24px;
     text-align: center;
-    margin-bottom: 22px;
+    margin-bottom: 24px;
   }
 
   &__init-icon {
     position: relative;
     width: fit-content;
     margin: 0 auto;
-    margin-top: 28px;
-    margin-bottom: 28px;
+    margin-top: 38px;
+    margin-bottom: 25px;
 
     &:after {
       position: absolute;
@@ -90,6 +137,11 @@
     display: flex;
     gap: 57px;
     margin-bottom: 32px;
+
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &__card {
@@ -103,6 +155,8 @@
     font-size: 20px;
     color: #1f2b38;
     z-index: 1;
+    left: 5px;
+    top: 0;
 
     &:after {
       position: absolute;
@@ -130,7 +184,7 @@
     width: 160px;
     height: 90px;
     background: #c4c4c4;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
 
     svg {
       width: 9px;
@@ -167,6 +221,8 @@
   &__button {
     display: flex;
     margin: 0 auto;
+    font-size: 14px;
+    padding: 12px 28px;
   }
 }
 </style>

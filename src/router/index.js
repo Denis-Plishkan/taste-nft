@@ -1,11 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import MainPage from "@/pages/MainPage.vue";
 import ProfilePage from "@/pages/ProfilePage.vue";
 import CreatorPage from "@/pages/CreatorPage.vue";
 import ArtworkPage from "@/pages/ArtworkPage.vue";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory('/taste-nft/'),
   routes: [
     {
       path: '/',
