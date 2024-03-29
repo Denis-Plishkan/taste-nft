@@ -4,13 +4,18 @@
       <router-link to="/">
 <!--        <img alt="Vue logo" class="logo" src="@/image/logo.png"/>-->
         <PictureComponent :srcset="'@/image/logo.webp'" :src="'@/image/logo.png'" :alt="'logo'"/>
-
+<!--        <picture>-->
+<!--          <source srcset="@/image/logo.webp" type="image/webp" />-->
+<!--          <img src="@/image/logo.png" alt="logo"  />-->
+<!--        </picture>-->
       </router-link>
 
       <HeaderInput/>
     </div>
 
-    <UIButton class="header__button" @click="openPopup" v-if="isAuthorization" :class="{ 'disabled': isPopupSecondOpen}"></UIButton>
+    <UIButton class="header__button" @click="openPopup" v-if="isAuthorization" :class="{ 'disabled': isPopupSecondOpen}">
+      Connect wallet
+    </UIButton>
 
     <UIPopup v-if="isPopupOpen" @closePopup="closePopup">
       <BaseSvg :id="'cross'" @click="closePopup" class="popup__cross-icon"/>
@@ -33,7 +38,9 @@
 
         </div>
       </div>
-      <UIButton @click="openSecondPopup" class="did-wallet__button"/>
+      <UIButton @click="openSecondPopup" class="did-wallet__button">
+        Connect wallet
+      </UIButton>
     </UIPopup>
 
     <UIPopup v-if="isPopupSecondOpen" @closePopup="closeSecondPopup">
@@ -68,16 +75,13 @@ import PictureComponent from "@/components/Base/PictureComponent.vue";
 
 import { ref } from 'vue';
 
-
-
-const isAuthorization = ref(true);
-
 const cards = [
   {number: 1, description: 'Описание что нужно сделать'},
   {number: 2, description: 'Описание что нужно сделать'},
   {number: 3, description: 'Описание что нужно сделать'},
 ]
 
+const isAuthorization = ref(true);
 let isPopupOpen = ref(false);
 let isPopupSecondOpen = ref(false);
 

@@ -1,6 +1,6 @@
 <template>
   <button class="button">
-    Connect wallet
+    <slot></slot>
   </button>
 </template>
 
@@ -9,8 +9,6 @@
 </script>
 
 <style lang="scss" scoped>
-
-
 
   .button {
     background: linear-gradient(270deg, #8743ff 0%, #4136f1 100%);

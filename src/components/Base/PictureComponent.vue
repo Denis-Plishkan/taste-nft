@@ -18,9 +18,8 @@ const props = defineProps({
     type: String,
     default: '',
   }
-
 })
 
 const src = ref(new URL(`${props.src}`, import.meta.url));
-const srcset = ref(new URL(`${props.srcset}`, import.meta.url))
+const srcset = ref(new URL(`${props.srcset}`, import.meta.url));
 </script>
