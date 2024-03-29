@@ -1,16 +1,19 @@
 <template>
   <header class="header">
     <div class="header__left">
-      <img alt="Vue logo" class="logo" src="@/image/logo.png"/>
-      <UIInput></UIInput>
+      <router-link to="/">
+<!--        <img alt="Vue logo" class="logo" src="@/image/logo.png"/>-->
+        <PictureComponent :srcset="'@/image/logo.webp'" :src="'@/image/logo.png'" :alt="'logo'"/>
+
+      </router-link>
+
+      <HeaderInput/>
     </div>
 
-    <UIButton class="header__button" @click="openPopup" :class="{ 'disabled': isPopupSecondOpen }"></UIButton>
+    <UIButton class="header__button" @click="openPopup" v-if="isAuthorization" :class="{ 'disabled': isPopupSecondOpen}"></UIButton>
 
-    <UIPopup class="popup__info-wallet" v-if="isPopupOpen" @closePopup="closePopup">
-      <svg @click="closePopup" class="popup__cross-icon popup__cross-icon-info">
-        <use href="#cross"></use>
-      </svg>
+    <UIPopup v-if="isPopupOpen" @closePopup="closePopup">
+      <BaseSvg :id="'cross'" @click="closePopup" class="popup__cross-icon"/>
 
       <h3 class="popup__text">Connecting wallet</h3>
 
@@ -20,9 +23,7 @@
           <p class="did-wallet__card-num">{{ card.number + '.' }}</p>
           <div class="did-wallet__card-video">
             <div class="did-wallet__card-svg-container">
-              <svg>
-                <use href="#play"></use>
-              </svg>
+              <BaseSvg :id="'play'"/>
             </div>
           </div>
 
@@ -35,22 +36,16 @@
       <UIButton @click="openSecondPopup" class="did-wallet__button"/>
     </UIPopup>
 
-    <UIPopup class="popup__connect-wallet" v-if="isPopupSecondOpen" @closePopup="closeSecondPopup">
-      <svg @click="closeSecondPopup" class="popup__cross-icon popup__cross-icon-connect">
-        <use href="#cross"></use>
-      </svg>
+    <UIPopup v-if="isPopupSecondOpen" @closePopup="closeSecondPopup">
+      <BaseSvg @click="closeSecondPopup" class="popup__cross-icon" :id="'cross'"/>
 
       <h3 class="popup__text">Connecting wallet</h3>
 
       <div class="popup__init-icon">
         <div class="popup__init-progress-icon">
-          <svg>
-            <use href="#progress"></use>
-          </svg>
+          <BaseSvg :id="'progress'"/>
         </div>
-        <svg>
-          <use href="#init-icon"></use>
-        </svg>
+        <BaseSvg :id="'init-icon'"/>
       </div>
 
       <p class="popup__init-text">
@@ -65,12 +60,17 @@
 
 <script setup>
 
-import UIInput from "@/components/UI/UIInput.vue";
+import HeaderInput from "@/components/Base/HeaderInput.vue";
 import UIButton from "@/components/UI/UIButton.vue";
 import UIPopup from "@/components/UI/UIPopup.vue";
+import BaseSvg from '@/components/Base/BaseSvg.vue';
+import PictureComponent from "@/components/Base/PictureComponent.vue";
 
 import { ref } from 'vue';
 
+
+
+const isAuthorization = ref(true);
 
 const cards = [
   {number: 1, description: 'Описание что нужно сделать'},
@@ -97,14 +97,12 @@ function closeSecondPopup() {
 }
 
 function openSecondPopup() {
-  const button = document.querySelector('.header__button');
-
   closePopup();
   isPopupSecondOpen.value = true;
 
   setTimeout(() => {
     closeSecondPopup();
-    button.classList.add('none');
+    isAuthorization.value = false;
   }, 2000);
 }
 
@@ -125,7 +123,7 @@ function openSecondPopup() {
   padding: 5px 24px;
 
   @include media-breakpoint-down(xs) {
-    padding: 10px;
+    padding: 5px 10px;
   }
 
   &__left{

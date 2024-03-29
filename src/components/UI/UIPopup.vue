@@ -24,6 +24,7 @@
   border-radius: 32px;
   box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.05);
   min-width: 653px;
+  padding: 50px;
 
   @include media-breakpoint-down(sm) {
     height: 300px;
@@ -33,50 +34,15 @@
     padding: 32px 15px;
   }
 
-  &__info-wallet {
-    padding: 76px 28px 28px 30px;
-
-    @include media-breakpoint-down(sm) {
-      padding-top: 34px;
-    }
-  }
-
-  &__connect-wallet {
-    padding: 53px 10px 65px 10px;
-    max-height: 222px;
-  }
 
   &__cross-icon {
     width: 16px;
     height: 16px;
     position: absolute;
     cursor: pointer;
+    right: 30px;
+    top: 54px;
 
-
-  }
-
-  &__cross-icon-info {
-    top: 79px;
-    right: 25px;
-
-    @include media-breakpoint-down(sm) {
-      top: 37px;
-    }
-
-    @include media-breakpoint-down(xxs) {
-      top: 10px;
-      right: 14px;
-    }
-  }
-
-  &__cross-icon-connect {
-    top: 56px;
-    right: 26px;
-
-    @include media-breakpoint-down(xxs) {
-      top: 10px;
-      right: 14px;
-    }
   }
 
   &__text {

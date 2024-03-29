@@ -1,14 +1,9 @@
 <template>
-  <div class="input">
-    <svg>
-      <use href="#search-icon"></use>
-    </svg>
-    <input type="text" placeholder="Search for ...">
-  </div>
+  <input :type="type" :placeholder="placeholder">
 </template>
 
 <script setup>
-
+defineProps(['type', 'placeholder'])
 </script>
 
 <style lang="scss" scoped>
@@ -19,12 +14,11 @@
     background: #1D2228;
     color: #fff;
     border-radius: 12px;
-    height: 34px;
+    height: 40px;
     padding: 0 40px;
     width: 100%;
     font-family: Raleway;
     font-weight: 600;
-    font-size: 12px;
     color: rgba(255, 255, 255, 0.5);
 
     @include media-breakpoint-down(xs) {
@@ -32,20 +26,4 @@
     }
   }
 
-  .input {
-    width: 100%;
-    position: relative;
-
-    svg {
-      width: 15px;
-      height: 15px;
-      position: absolute;
-      top: 8px;
-      left: 12px;
-
-      @include media-breakpoint-down(xs) {
-        display: none;
-      }
-    }
-  }
 </style>
