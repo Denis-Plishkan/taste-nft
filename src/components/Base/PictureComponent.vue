@@ -1,26 +1,10 @@
 <template>
   <picture>
     <source :srcset="srcset" type="image/webp" />
-    <img :src="src"  />
+    <img :src='src' :alt="alt ? alt : 'img'" />
   </picture>
 </template>
 
 <script setup>
-
-import {ref} from "vue";
-
-const props = defineProps({
-  srcset: {
-    type: String,
-    default: '',
-  },
-  src: {
-    type: String,
-    default: '',
-  }
-
-})
-
-const src = ref(new URL(`${props.src}`, import.meta.url));
-const srcset = ref(new URL(`${props.srcset}`, import.meta.url))
+defineProps(['srcset', 'src', 'alt'])
 </script>

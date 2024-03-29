@@ -2,8 +2,7 @@
   <header class="header">
     <div class="header__left">
       <router-link to="/">
-<!--        <img alt="Vue logo" class="logo" src="@/image/logo.png"/>-->
-        <PictureComponent :srcset="'@/image/logo.webp'" :src="'@/image/logo.png'" :alt="'logo'"/>
+        <PictureComponent :srcset="'/taste-nft/src/assets/image/logo.webp'"  :src="'/taste-nft/src/assets/image/logo.png'" :alt="'logo'" regular-src=""/>
 
       </router-link>
 
