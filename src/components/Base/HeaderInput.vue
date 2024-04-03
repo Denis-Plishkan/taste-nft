@@ -13,7 +13,7 @@ import UIInput from "@/components/UI/UIInput.vue";
 
 <style lang="scss" scoped>
 
-@import "@/assets/media-breakpoints.scss";
+@import "@/assets/scss/media-breakpoints";
 
 .header {
   &__input {

@@ -8,7 +8,7 @@ defineProps(['type', 'placeholder'])
 
 <style lang="scss" scoped>
 
-@import "@/assets/media-breakpoints.scss";
+@import "@/assets/scss/media-breakpoints";
 
   input {
     background: #1D2228;

@@ -11,7 +11,7 @@
 
 <style lang="scss">
 
-@import "@/assets/media-breakpoints.scss";
+@import "@/assets/scss/media-breakpoints";
 
 .popup {
   position: absolute;

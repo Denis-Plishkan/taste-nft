@@ -2,19 +2,19 @@
   <header class="header">
     <div class="header__left">
       <router-link to="/">
-<!--        <img alt="Vue logo" class="logo" src="@/image/logo.png"/>-->
-        <PictureComponent :srcset="'@/image/logo.webp'" :src="'@/image/logo.png'" :alt="'logo'"/>
-<!--        <picture>-->
-<!--          <source srcset="@/image/logo.webp" type="image/webp" />-->
-<!--          <img src="@/image/logo.png" alt="logo"  />-->
-<!--        </picture>-->
+        <PictureComponent :srcset="'/taste-nft/src/assets/image/logo.webp'"  :src="'/taste-nft/src/assets/image/logo.png'" :alt="'logo'" />
+
       </router-link>
 
       <HeaderInput/>
     </div>
 
-    <UIButton class="header__button" @click="openPopup" v-if="isAuthorization" :class="{ 'disabled': isPopupSecondOpen}">
+    <UIButton class="header__button" @click="openPopup" v-if="!isAuthorization" :class="{ 'disabled': isPopupSecondOpen}">
       Connect wallet
+    </UIButton>
+
+    <UIButton class="header__button" v-if="isAuthorization">
+      + Add artwork
     </UIButton>
 
     <UIPopup v-if="isPopupOpen" @closePopup="closePopup">
@@ -75,13 +75,14 @@ import PictureComponent from "@/components/Base/PictureComponent.vue";
 
 import { ref } from 'vue';
 
+const isAuthorization = ref(false);
+
 const cards = [
   {number: 1, description: 'Описание что нужно сделать'},
   {number: 2, description: 'Описание что нужно сделать'},
   {number: 3, description: 'Описание что нужно сделать'},
 ]
 
-const isAuthorization = ref(true);
 let isPopupOpen = ref(false);
 let isPopupSecondOpen = ref(false);
 
@@ -106,14 +107,14 @@ function openSecondPopup() {
 
   setTimeout(() => {
     closeSecondPopup();
-    isAuthorization.value = false;
+    isAuthorization.value = true;
   }, 2000);
 }
 
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/media-breakpoints.scss";
+@import "@/assets/scss/media-breakpoints";
 
 .header {
   max-height: 100vh;
