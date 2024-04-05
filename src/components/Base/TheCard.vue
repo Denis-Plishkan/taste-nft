@@ -5,7 +5,6 @@
       <div class="card__img-info-card">
         <UserInfo class="card__wrapper-user-info">
           <template v-slot:image>
-<!--            <div class="card__image-skeleton"></div>-->
             <div class="card__wrapper-image">
               <PictureComponent class="card__img-image" :srcset="props.user.img.webp"  :src="props.user.img.default" :alt="'user'" />
             </div>
@@ -26,7 +25,7 @@
       <div class="card__info-sold-wrapper">
         <p class="card__info-sold-text">Sold for:</p>
         <p class="card__info-sold-current">
-          <PictureComponent :srcset="'/taste-nft/src/assets/image/logo-card.webp'"  :src="'/taste-nft/src/assets/image/logo-card.png'" :alt="'logo'"/>
+          <PictureComponent :srcset="logoCardSrcset"  :src="logoCardSrc" :alt="'logo'"/>
           {{ props.card.sold }}
         </p>
       </div>
@@ -47,6 +46,9 @@
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 import UserInfo from "@/components/Reusable/UserInfo.vue";
 
+const logoCardSrc = new URL('../../assets/image/logo-card.png', import.meta.url);
+const logoCardSrcset = new URL('../../assets/image/logo-card.webp', import.meta.url);
+
 const props = defineProps({
   card: Object,
   user: Object,
@@ -55,12 +57,25 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/media-breakpoints";
+
 .card {
   border: 1px solid #333940;
   width: fit-content;
+  cursor: pointer;
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+  }
+
 
   &__img {
     position: relative;
+
+    img {
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+      }
+    }
   }
 
   &__image-skeleton {
@@ -90,14 +105,19 @@ const props = defineProps({
     background: #fff;
     border-radius: 12px;
     width: fit-content;
-    padding: 6px 12px;
+    padding: 6px 8px;
     position: absolute;
     top: 12px;
-    left: 16px;
+    left: 13px;
   }
 
   &__info {
-    padding: 24px 17px 18px 16px;
+    padding: 25px 19px 17px 16px;
+  }
+
+  &__info-name {
+    font-weight: 700;
+    font-size: 20px;
   }
 
   &__info-sold-wrapper, &__info-ending-wrapper {
@@ -110,6 +130,10 @@ const props = defineProps({
     font-weight: 600;
     font-size: 14px;
     color: rgba(255, 255, 255, 0.5);
+  }
+
+  &__info-sold-current {
+    margin-right: 32px;
   }
 
   &__info-name {

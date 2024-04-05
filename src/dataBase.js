@@ -1,26 +1,28 @@
+
 export const cards = [
     {
        img: {
-           default: '/taste-nft/src/assets/image/card/nft.png',
-           webp: '/taste-nft/src/assets/image/card/nft.webp'
+           default: new URL('./assets/image/card/nft.png', import.meta.url),
+           webp: new URL('./assets/image/card/nft.webp', import.meta.url)
        },
         name: 'WFH - art name',
         sold: '1.5M',
         ending: '05h 02m 41s',
         user: {
-            user: 'User Name',
-            userName: 'username',
+            user: 'User Name1',
+            userName: 'username1',
             sales: '24 sales on 32ETH',
             img: {
-                default: '/taste-nft/src/assets/image/users/user1.png',
-                webp: '/taste-nft/src/assets/image/users/user1.webp'
+                default: new URL('./assets/image/users/user1.png', import.meta.url),
+                webp: new URL('./assets/image/users/user1.webp', import.meta.url)
             }
         }
+
     },
     {
         img: {
-            default: '/taste-nft/src/assets/image/card/nft2.png',
-            webp: '/taste-nft/src/assets/image/card/nft2.webp'
+            default: new URL('./assets/image/card/nft2.png', import.meta.url),
+            webp: new URL('./assets/image/card/nft2.webp', import.meta.url)
         },
         name: 'WFH - art name2',
         sold: '1.6M',
@@ -30,15 +32,16 @@ export const cards = [
             userName: 'username2',
             sales: '24 sales on 32ETH',
             img: {
-                default: '/taste-nft/src/assets/image/users/user2.png',
-                webp: '/taste-nft/src/assets/image/users/user2.webp'
+                default: new URL('./assets/image/users/user2.png', import.meta.url),
+                webp: new URL('./assets/image/users/user2.webp', import.meta.url)
             }
         }
+
     },
     {
         img: {
-            default: '/taste-nft/src/assets/image/card/nft3.png',
-            webp: '/taste-nft/src/assets/image/card/nft3.webp'
+            default: new URL('./assets/image/card/nft3.png', import.meta.url),
+            webp: new URL('./assets/image/card/nft3.webp', import.meta.url)
         },
         name: 'WFH - art name3',
         sold: '1.6M',
@@ -48,15 +51,16 @@ export const cards = [
             userName: 'username3',
             sales: '24 sales on 32ETH',
             img: {
-                default: '/taste-nft/src/assets/image/users/user3.png',
-                webp: '/taste-nft/src/assets/image/users/user3.webp'
+                default: new URL('./assets/image/users/user3.png', import.meta.url),
+                webp: new URL('./assets/image/users/user3.webp', import.meta.url)
             }
         }
+
     },
     {
         img: {
-            default: '/taste-nft/src/assets/image/card/nft4.png',
-            webp: '/taste-nft/src/assets/image/card/nft4.webp'
+            default: new URL('./assets/image/card/nft4.png', import.meta.url),
+            webp: new URL('./assets/image/card/nft4.webp', import.meta.url)
         },
         name: 'WFH - art name4',
         sold: '1.6M',
@@ -66,15 +70,16 @@ export const cards = [
             userName: 'username4',
             sales: '24 sales on 32ETH',
             img: {
-                default: '/taste-nft/src/assets/image/users/user4.png',
-                webp: '/taste-nft/src/assets/image/users/user4.webp'
+                default: new URL('./assets/image/users/user4.png', import.meta.url),
+                webp: new URL('./assets/image/users/user4.webp', import.meta.url)
             }
         }
+
     },
     {
         img: {
-            default: '/taste-nft/src/assets/image/card/nft5.png',
-            webp: '/taste-nft/src/assets/image/card/nft5.webp'
+            default: new URL('./assets/image/card/nft5.png', import.meta.url),
+            webp: new URL('./assets/image/card/nft5.webp', import.meta.url)
         },
         name: 'WFH - art name5',
         sold: '1.6M',
@@ -84,15 +89,15 @@ export const cards = [
             userName: 'username5',
             sales: '24 sales on 32ETH',
             img: {
-                default: '/taste-nft/src/assets/image/users/user5.png',
-                webp: '/taste-nft/src/assets/image/users/user5.webp'
+                default: new URL('./assets/image/users/user5.png', import.meta.url),
+                webp: new URL('./assets/image/users/user5.webp', import.meta.url)
             }
         }
     },
     {
         img: {
-            default: '/taste-nft/src/assets/image/card/nft6.png',
-            webp: '/taste-nft/src/assets/image/card/nft6.webp'
+            default: new URL('./assets/image/card/nft6.png', import.meta.url),
+            webp: new URL('./assets/image/card/nft6.webp', import.meta.url)
         },
         name: 'WFH - art name6',
         sold: '1.6M',
@@ -102,15 +107,15 @@ export const cards = [
             userName: 'username6',
             sales: '24 sales on 32ETH',
             img: {
-                default: '/taste-nft/src/assets/image/users/user6.png',
-                webp: '/taste-nft/src/assets/image/users/user6.webp'
+                default: new URL('./assets/image/users/user6.png', import.meta.url),
+                webp: new URL('./assets/image/users/user6.webp', import.meta.url)
             }
         }
     },
     {
         img: {
-            default: '/taste-nft/src/assets/image/card/nft7.png',
-            webp: '/taste-nft/src/assets/image/card/nft7.webp'
+            default: new URL('./assets/image/card/nft7.png', import.meta.url),
+            webp: new URL('./assets/image/card/nft7.webp', import.meta.url)
         },
         name: 'WFH - art name7',
         sold: '1.6M',
@@ -120,15 +125,15 @@ export const cards = [
             userName: 'username7',
             sales: '24 sales on 32ETH',
             img: {
-                default: '/taste-nft/src/assets/image/users/user7.png',
-                webp: '/taste-nft/src/assets/image/users/user7.webp'
+                default: new URL('./assets/image/users/user7.png', import.meta.url),
+                webp: new URL('./assets/image/users/user7.webp', import.meta.url)
             }
         }
     },
     {
         img: {
-            default: '/taste-nft/src/assets/image/card/nft8.png',
-            webp: '/taste-nft/src/assets/image/card/nft8.webp'
+            default: new URL('./assets/image/card/nft8.png', import.meta.url),
+            webp: new URL('./assets/image/card/nft8.webp', import.meta.url)
         },
         name: 'WFH - art name8',
         sold: '1.6M',
@@ -138,9 +143,10 @@ export const cards = [
             userName: 'username8',
             sales: '24 sales on 32ETH',
             img: {
-                default: '/taste-nft/src/assets/image/users/user8.png',
-                webp: '/taste-nft/src/assets/image/users/user8.webp'
+                default: new URL('./assets/image/users/user8.png', import.meta.url),
+                webp: new URL('./assets/image/users/user8.webp', import.meta.url)
             }
         }
     },
 ]
+

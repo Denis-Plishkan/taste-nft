@@ -23,6 +23,7 @@
   box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.05);
   min-width: 653px;
   padding: 50px;
+  z-index: 2;
 
   @include media-breakpoint-down(sm) {
     height: 300px;

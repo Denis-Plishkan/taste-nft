@@ -2,7 +2,7 @@
   <header class="header">
     <div class="header__left">
       <router-link to="/">
-        <PictureComponent :srcset="'/taste-nft/src/assets/image/logo.webp'"  :src="'/taste-nft/src/assets/image/logo.png'" :alt="'logo'" />
+        <PictureComponent :srcset="logoSrcset"  :src="logoSrc" :alt="'logo'" />
 
       </router-link>
 
@@ -75,6 +75,9 @@ import PictureComponent from "@/components/Base/PictureComponent.vue";
 
 import { ref } from 'vue';
 
+const logoSrc = new URL('../../assets/image/logo.png', import.meta.url);
+const logoSrcset = new URL('../../assets/image/logo.webp', import.meta.url);
+
 const isAuthorization = ref(false);
 
 const cards = [
@@ -126,6 +129,7 @@ function openSecondPopup() {
   min-height: 56px;
   box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.05);
   padding: 5px 24px;
+  margin-bottom: 40px;
 
   @include media-breakpoint-down(xs) {
     padding: 5px 10px;

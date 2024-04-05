@@ -1,152 +1,115 @@
-<!--<template>-->
-<!--  <div class="swiper mySwiper">-->
-<!--    <div class="swiper-wrapper">-->
-<!--      <div class="swiper-slide" v-for="(card, index) in cards.splice(0, 5)" :key="index">-->
-<!--        <PictureComponent class="mySwiper__img" :srcset="card.img.webp"  :src="card.img.default" :alt="'nft'"/>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="swiper-pagination__header"></div>-->
-<!--  </div>-->
-<!--</template>-->
-
-<!--<script setup>-->
-<!--import { onMounted } from 'vue';-->
-<!--import Swiper from "swiper";-->
-<!--import {-->
-<!--  Navigation,-->
-<!--  Pagination,-->
-<!--  Autoplay,-->
-<!--  Scrollbar,-->
-<!--  Thumbs,-->
-<!--  EffectCoverflow-->
-<!--} from "swiper/modules";-->
-<!--import {cards} from "@/dataBase.js";-->
-<!--import PictureComponent from "@/components/Base/PictureComponent.vue";-->
-<!--Swiper.use([Navigation, Pagination, Autoplay, Scrollbar, Thumbs, EffectCoverflow]);-->
-
-<!--let swiper;-->
-
-<!--onMounted(() => {-->
-<!--  swiper = new Swiper(".mySwiper", {-->
-<!--    effect: "coverflow",-->
-<!--    grabCursor: true,-->
-<!--    centeredSlides: true,-->
-<!--    slidesPerView: 5,-->
-<!--    coverflowEffect: {-->
-<!--      rotate: 0,-->
-<!--      stretch: 10,-->
-<!--      depth: 100,-->
-<!--      modifier: 3,-->
-<!--      slideShadows: false,-->
-<!--    },-->
-<!--    pagination: {-->
-<!--      el: ".swiper-pagination__header",-->
-<!--    },-->
-<!--  });-->
-<!--});-->
-<!--</script>-->
-
-<!--<style>-->
-<!--.swiper-image {-->
-<!--  max-width: 100%;-->
-<!--  max-height: 100%;-->
-<!--}-->
-
-<!--.swiper-slide img {-->
-<!--  width: 519px;-->
-<!--}-->
-
-<!--.swiper-pagination {-->
-<!--  position: absolute;-->
-<!--  bottom: 10px;-->
-<!--  left: 50%;-->
-<!--  transform: translateX(-50%);-->
-<!--  display: flex;-->
-<!--  list-style: none;-->
-<!--  padding: 0;-->
-<!--  margin: 0;-->
-<!--}-->
-
-<!--.swiper-pagination-bullet {-->
-<!--  width: 8px!important;-->
-<!--  height: 8px!important;-->
-<!--  background-color: #fff;-->
-<!--  border-radius: 50%;-->
-<!--  margin: 0 5px;-->
-<!--  cursor: pointer;-->
-<!--}-->
-
-<!--.swiper-pagination-bullet-active {-->
-<!--  background-color: #ff0000; /* Цвет активного буллета */-->
-<!--}-->
-
-<!--</style>-->
-
 <template>
-  <div class="swiper header-swiper">
-    <swiper
-        grab-cursor
-        :slides-per-view="5"
-        :modules="[Navigation, EffectCoverflow]"
-        :pagination="{ el: '.header-swiper__pagination' }"
-        :coverflowEffect="{
-          rotate: 50,
-          stretch: 10,
-          depth: 100,
-          modifier: 3,
-          slideShadows: false
+  <div class="hero-swiper__wrapper">
+    <div class="swiper hero-swiper">
+      <swiper
+          v-if="swipers"
+          grab-cursor
+          slides-per-view="1"
+          :modules="[Navigation, EffectCoverflow, Pagination]"
+          :pagination="{ el: '.hero-swiper__pagination' }"
+          :effect="'coverflow'"
+          :coverflowEffect="{
+          rotate: -2,
+          stretch: '-80%',
+          depth: 200,
+          modifier: -1,
+          slideShadows: false,
         }"
-    >
-      <swiper-slide v-for="(card, index) in cards" :key="index">
-        <PictureComponent class="mySwiper__img" :srcset="card.img.webp" :src="card.img.default" :alt="'nft'"/>
-      </swiper-slide>
-    </swiper>
-    <div class="header-swiper__pagination"></div>
+      >
+        <swiper-slide v-for="(card, index) in props.cards.slice(0, 5)" :key="index">
+          <div class="hero-swiper__img">
+            <PictureComponent class="hero-swiper__images" :srcset="card.img.webp" :src="card.img.default" :alt="'nft'"/>
+          </div>
+        </swiper-slide>
+      </swiper>
+    </div>
+    <div class="hero-swiper__pagination"></div>
   </div>
+
 </template>
 
 <script setup>
+import {onMounted, ref} from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation, EffectCoverflow } from 'swiper/modules'
+import { Navigation, EffectCoverflow, Pagination } from 'swiper/modules'
 import 'swiper/css'
-import { cards } from "@/dataBase.js";
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
 import PictureComponent from "@/components/Base/PictureComponent.vue";
+
+const props = defineProps(['cards'])
+const swipers = ref(false)
+
+onMounted(()=> {
+  setTimeout(()=> {
+    swipers.value = true
+  }, 100)
+})
+
 
 </script>
 
-<style scoped lang="scss">
-.header-swiper {
+<style lang="scss">
+@import "@/assets/scss/media-breakpoints";
+.hero-swiper {
+
+  &__wrapper {
+    position: relative;
+  }
 
   &__pagination {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
+    bottom: -28px !important;
+    left: 50% !important;
     transform: translateX(-50%);
+
+    .swiper-pagination-bullet-active {
+      border-radius: 99px;
+      width: 95px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    .swiper-pagination-bullet {
+      border-radius: 99px;
+      width: 95px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.15);
+
+      @include media-breakpoint-down(sm) {
+        width: 64px;
+      }
+
+      @include media-breakpoint-down(xs) {
+        width: 46px;
+      }
+    }
   }
 
-  &__slide {
-    display: flex;
-    align-items: flex-start;
+  &__img {
+    width: 519px;
+
   }
 
-  &__slide-wrapper {
-    min-width: 620px;
-    margin-left: 117px;
-    margin-right: 41px;
-    padding-top: 81px;
-  }
-
-  &__image-wrapper {
-    position: relative;
-    min-width: 602px;
-    padding-top: 10px;
-  }
 }
+.swiper-image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.swiper-slide img {
+  width: 519px;
+
+  @include media-breakpoint-down(sm) {
+    width: 270px;
+  }
+
+}
+
+
+
+
 </style>
-
-
-
-
 
 
 

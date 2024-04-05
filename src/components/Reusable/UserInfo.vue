@@ -20,5 +20,11 @@
     display: flex;
     align-items: center;
   }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
 }
 </style>

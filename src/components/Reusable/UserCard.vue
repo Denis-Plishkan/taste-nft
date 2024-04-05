@@ -19,10 +19,16 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/media-breakpoints";
+
 .user-card {
   border: 1px solid #333940;
   width: 245px;
   height: 222px;
+
+  @include media-breakpoint-down(xxs) {
+    width: 220px;
+  }
 
   &__img {
     width: 80px;
@@ -46,6 +52,7 @@ const props = defineProps({
   &__name {
     font-weight: 700;
     font-size: 20px;
+    margin-bottom: 14px;
   }
 
   &__user-name {
