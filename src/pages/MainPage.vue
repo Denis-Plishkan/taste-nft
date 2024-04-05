@@ -49,7 +49,7 @@
       </div>
 
       <div class="nft-cards__wrapper">
-        <TheCard v-for="(card, index) in cards" :key="index" :card="card" :user="card.user">
+        <TheCard v-for="(card, index) in cards" :key="index" :card="card">
         </TheCard>
       </div>
     </section>

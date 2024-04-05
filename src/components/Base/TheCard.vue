@@ -6,14 +6,15 @@
         <UserInfo class="card__wrapper-user-info">
           <template v-slot:image>
             <div class="card__wrapper-image">
-              <PictureComponent class="card__img-image" :srcset="props.user.img.webp"  :src="props.user.img.default" :alt="'user'" />
+              {{ getId(props.card.userId) }}
+<!--              <PictureComponent class="card__img-image" :srcset=""  :src="" :alt="'user'" />-->
             </div>
           </template>
           <template v-slot:info-name>
-            <p class="card__info-name-black">{{ props.user.user }}</p>
+<!--            <p class="card__info-name-black">{{ props.user.user }}</p>-->
           </template>
           <template v-slot:info-user-name>
-            <p class="card__info-user-name">@{{ props.user.userName }}</p>
+<!--            <p class="card__info-user-name">@{{ props.user.userName }}</p>-->
           </template>
         </UserInfo>
       </div>
@@ -49,10 +50,18 @@ import UserInfo from "@/components/Reusable/UserInfo.vue";
 const logoCardSrc = new URL('../../assets/image/logo-card.png', import.meta.url);
 const logoCardSrcset = new URL('../../assets/image/logo-card.webp', import.meta.url);
 
+import {users} from "@/dataBase.js";
+
+
+
 const props = defineProps({
   card: Object,
-  user: Object,
 });
+
+function getId (id) {
+  return users.find(item => item.id === id)
+}
+
 
 </script>
 
