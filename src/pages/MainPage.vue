@@ -6,7 +6,7 @@
           <UserInfo class="user-info__hero-wrapper">
             <template v-slot:image>
               <div class="user-info__image-img">
-                <PictureComponent :srcset="userSrcset"  :src="userSrc" :alt="'user'"/>
+                <PictureComponent :srcset="userSrcset" :src="userSrc" :alt="'user'"/>
               </div>
             </template>
             <template v-slot:info-name>
@@ -19,7 +19,7 @@
           <NftInfo>
             <div class="nft-info__bottom">
               <p class="nft-info__bottom-sold">
-                Sold for: <PictureComponent :srcset="logoSoldSrcset"  :src="logoSoldSrc" :alt="'logo'" /> 1,5M
+                Sold for: <PictureComponent :srcset="logoSoldSrcset" :src="logoSoldSrc" :alt="'logo'" /> 1,5M
               </p>
               <div class="nft-info__bottom-buttons nft-info__button">
                 <UIButton class="nft-info__button-vue">View</UIButton>
@@ -48,8 +48,8 @@
         <UIDropdown>Auctions</UIDropdown>
       </div>
 
-      <div class="nft-cards__wrapper">
-        <TheCard v-for="(card, index) in cards" :key="index" :card="card">
+      <div class="nft-cards__wrapper" >
+        <TheCard v-for="(card, index) in cards.slice(0, 8)" :key="index" :card="card" >
         </TheCard>
       </div>
     </section>
@@ -80,6 +80,7 @@ const userSrc = new URL('../assets/image/users/user1.png', import.meta.url);
 const userSrcset = new URL('../assets/image/users/user1.webp', import.meta.url);
 const logoSoldSrc = new URL('../assets/image/logo-sold.png', import.meta.url);
 const logoSoldSrcset = new URL('../assets/image/logo-sold.webp', import.meta.url);
+
 
 </script>
 

@@ -6,7 +6,7 @@
 
       </router-link>
 
-      <HeaderInput/>
+      <HeaderInput v-model="search"/>
     </div>
 
     <UIButton class="header__button" @click="openPopup" v-if="!isAuthorization" :class="{ 'disabled': isPopupSecondOpen}">
@@ -74,6 +74,8 @@ import BaseSvg from '@/components/Base/BaseSvg.vue';
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 
 import { ref } from 'vue';
+
+const search = ref('')
 
 const logoSrc = new URL('../../assets/image/logo.png', import.meta.url);
 const logoSrcset = new URL('../../assets/image/logo.webp', import.meta.url);

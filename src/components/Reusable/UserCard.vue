@@ -1,11 +1,11 @@
 <template>
   <div class="user-card">
     <div class="user-card__img">
-<!--      <PictureComponent class="user-card__image" :srcset="props.user.img.webp"  :src="props.user.img.default" :alt="'user'"/>-->
+      <PictureComponent class="user-card__image" :srcset="props.user.img.webp"  :src="props.user.img.default" :alt="'user'"/>
     </div>
-<!--    <p class="user-card__name">{{ props.user.user }}</p>-->
-<!--    <p class="user-card__user-name">@{{ props.user.userName }}</p>-->
-<!--    <p class="user-card__sales">{{ props.user.sales }}</p>-->
+    <p class="user-card__name">{{ props.user.user }}</p>
+    <p class="user-card__user-name">@{{ props.user.userName }}</p>
+    <p class="user-card__sales">{{ props.user.sales }}</p>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ import PictureComponent from "@/components/Base/PictureComponent.vue";
 const props = defineProps({
   user: Object,
 });
+
 </script>
 
 <style lang="scss">

@@ -10,8 +10,8 @@
           space-between="40"
 
       >
-        <swiper-slide v-for="(card, index) in cards" :key="index">
-          <UserCard :user="card.user"/>
+        <swiper-slide v-for="(user, index) in users" :key="index">
+          <UserCard :user="user"/>
         </swiper-slide>
       </swiper>
     </div>
@@ -24,7 +24,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import {Navigation, Pagination, Scrollbar} from 'swiper/modules'
 import 'swiper/css'
 import UserCard from "@/components/Reusable/UserCard.vue";
-import {cards} from "@/dataBase.js";
+import {users} from "@/dataBase.js";
 import {ref, watchEffect} from "vue";
 
 const swiperSlidesPerView = ref(5.2);

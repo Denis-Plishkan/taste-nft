@@ -3,7 +3,7 @@
     WFH - art name
   </h3>
   <p class="nft-info__description">
-    Description: The iconic meme that became a viral Internet sensation and an indispensable part of the gachimuchi music genre. This was taken when I was very young and in my full "performance" attire. That part of me now "lives" on platforms like Twitch, YouTube, and Bilibili (B 站).
+    <span>Description:</span> The iconic meme that became a viral Internet sensation and an indispensable part of the gachimuchi music genre. This was taken when I was very young and in my full "performance" attire. That part of me now "lives" on platforms like Twitch, YouTube, and Bilibili (B 站).
   </p>
   <slot></slot>
 </template>
@@ -25,6 +25,10 @@
     font-size: 14px;
     margin-bottom: 14px;
     line-height: 129%;
+
+    span {
+      color: rgba(255, 255, 255, 0.5);;
+    }
   }
 }
 

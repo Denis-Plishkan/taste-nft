@@ -1,13 +1,24 @@
 <template>
   <div class="header__input">
     <BaseSvg :id="'search-icon'"/>
-    <UIInput class="header__ui-input" :type="'text'" :placeholder="'Search for ...'"/>
+    <UIInput class="header__ui-input"
+             :type="'text'"
+             :placeholder="'Search for ...'"
+             :value="props.modelValue"
+             @input="emit('update:modelValue', $event.target.value)"
+
+    />
   </div>
 </template>
 
 <script setup>
+
 import BaseSvg from '@/components/Base/BaseSvg.vue';
 import UIInput from "@/components/UI/UIInput.vue";
+
+const props = defineProps(['modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
 
 </script>
 

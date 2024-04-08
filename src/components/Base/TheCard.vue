@@ -6,15 +6,14 @@
         <UserInfo class="card__wrapper-user-info">
           <template v-slot:image>
             <div class="card__wrapper-image">
-              {{ getId(props.card.userId) }}
-<!--              <PictureComponent class="card__img-image" :srcset=""  :src="" :alt="'user'" />-->
+              <PictureComponent class="card__img-image" :srcset="getUserById().img.webp"  :src="getUserById().img.default" :alt="'user'" />
             </div>
           </template>
           <template v-slot:info-name>
-<!--            <p class="card__info-name-black">{{ props.user.user }}</p>-->
+            <p class="card__info-name-black">{{ getUserById().user }}</p>
           </template>
           <template v-slot:info-user-name>
-<!--            <p class="card__info-user-name">@{{ props.user.userName }}</p>-->
+            <p class="card__info-user-name">@{{ getUserById().userName }}</p>
           </template>
         </UserInfo>
       </div>
@@ -46,22 +45,19 @@
 
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 import UserInfo from "@/components/Reusable/UserInfo.vue";
+import {users} from "@/dataBase.js";
 
 const logoCardSrc = new URL('../../assets/image/logo-card.png', import.meta.url);
 const logoCardSrcset = new URL('../../assets/image/logo-card.webp', import.meta.url);
 
-import {users} from "@/dataBase.js";
-
-
-
 const props = defineProps({
   card: Object,
+  search: Object,
 });
 
-function getId (id) {
-  return users.find(item => item.id === id)
-}
+const getId = (id) => () => users.find(item => item.id === id);
 
+const getUserById = getId(props.card.userId);
 
 </script>
 
@@ -70,8 +66,8 @@ function getId (id) {
 
 .card {
   border: 1px solid #333940;
-  width: fit-content;
   cursor: pointer;
+  width: 317px;
   @include media-breakpoint-down(sm) {
     width: 100%;
   }
@@ -81,8 +77,10 @@ function getId (id) {
     position: relative;
 
     img {
+      width: 100%;
+      max-height: 315px;
       @include media-breakpoint-down(sm) {
-        width: 100%;
+        max-height: 700px;
       }
     }
   }
