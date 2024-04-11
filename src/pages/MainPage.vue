@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <TheHeader @update-input-value="filterCards"/>
     <section class="hero">
       <div class="hero__wrapper">
         <div class="hero__wrapper-left">
@@ -10,16 +11,22 @@
               </div>
             </template>
             <template v-slot:info-name>
-              <p class="user-info__info-name">User Name</p>
+              <p class="user-info__info-name">{{ currentUser.user }}</p>
             </template>
             <template v-slot:info-user-name>
-              <p class="user-info__info-user-name">@username</p>
+              <p class="user-info__info-user-name">@{{ currentUser.userName }}</p>
             </template>
           </UserInfo>
           <NftInfo>
+            <h3 class="nft-info__name">
+              {{data.name}}
+            </h3>
+            <p class="nft-info__description">
+              <span>Description:</span> {{ data.description }}
+            </p>
             <div class="nft-info__bottom">
               <p class="nft-info__bottom-sold">
-                Sold for: <PictureComponent :srcset="logoSoldSrcset" :src="logoSoldSrc" :alt="'logo'" /> 1,5M
+                Sold for: <PictureComponent :srcset="logoSoldSrcset" :src="logoSoldSrc" :alt="'logo'" /> {{ data.sold }}
               </p>
               <div class="nft-info__bottom-buttons nft-info__button">
                 <UIButton class="nft-info__button-vue">View</UIButton>
@@ -37,7 +44,7 @@
           </NftInfo>
         </div>
         <div class="hero__wrapper-right">
-          <SwiperNft :cards="cards"/>
+          <SwiperNft :cards="cards" @update="infoActiveCard"/>
         </div>
       </div>
     </section>
@@ -48,9 +55,10 @@
         <UIDropdown>Auctions</UIDropdown>
       </div>
 
-      <div class="nft-cards__wrapper" >
-        <TheCard v-for="(card, index) in cards.slice(0, 8)" :key="index" :card="card" >
-        </TheCard>
+      <div class="nft-cards__wrapper"  >
+          <TheCard v-for="(card, index) in filteredCards.slice(0, 8)" :key="index" :card="card">
+          </TheCard>
+
       </div>
     </section>
 
@@ -71,16 +79,39 @@ import UIButton from "@/components/UI/UIButton.vue";
 import UISmallButton from "@/components/UI/UISmallButton.vue";
 import BaseSvg from "@/components/Base/BaseSvg.vue";
 import TheCard from "@/components/Base/TheCard.vue";
-import { cards } from "@/dataBase.js";
+import { cards, users } from "@/dataBase.js";
 import SwiperNft from "@/components/Reusable/SwiperNft.vue";
 import SwiperUser from "@/components/Reusable/SwiperUser.vue";
 import UIDropdown from "@/components/UI/UIDropdown.vue";
+import TheHeader from "@/components/Base/TheHeader.vue";
+
 
 const userSrc = new URL('../assets/image/users/user1.png', import.meta.url);
 const userSrcset = new URL('../assets/image/users/user1.webp', import.meta.url);
 const logoSoldSrc = new URL('../assets/image/logo-sold.png', import.meta.url);
 const logoSoldSrcset = new URL('../assets/image/logo-sold.webp', import.meta.url);
 
+import { ref } from 'vue';
+
+const filteredCards = ref(cards);
+const data = ref({});
+const currentUser = ref({})
+
+
+function filterCards(value) {
+  const query = value.toLowerCase();
+  filteredCards.value = cards.filter(card => {
+    return card.name.toLowerCase().includes(query);
+  })
+}
+
+function infoActiveCard(value) {
+  data.value = value;
+  console.log(data)
+
+  currentUser.value = users.find(user => user.id === value.userId);
+
+}
 
 </script>
 

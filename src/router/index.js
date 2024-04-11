@@ -20,9 +20,10 @@ const router = createRouter({
       component: () => import("@/pages/CreatorPage.vue"),
     },
     {
-      path: '/artwork',
-      name: 'artwork',
+      path: '/artwork/:id',
+      name: 'artworkPage',
       component: () => import("@/pages/ArtworkPage.vue"),
+      props: true,
     }
   ]
 })

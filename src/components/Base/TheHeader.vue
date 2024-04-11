@@ -6,7 +6,7 @@
 
       </router-link>
 
-      <HeaderInput v-model="search"/>
+      <UIInput v-model="searchQuery" @input="$emit('updateInputValue', searchQuery)"/>
     </div>
 
     <UIButton class="header__button" @click="openPopup" v-if="!isAuthorization" :class="{ 'disabled': isPopupSecondOpen}">
@@ -67,7 +67,7 @@
 
 <script setup>
 
-import HeaderInput from "@/components/Base/HeaderInput.vue";
+import UIInput from "@/components/UI/UIInput.vue";
 import UIButton from "@/components/UI/UIButton.vue";
 import UIPopup from "@/components/UI/UIPopup.vue";
 import BaseSvg from '@/components/Base/BaseSvg.vue';
@@ -75,7 +75,7 @@ import PictureComponent from "@/components/Base/PictureComponent.vue";
 
 import { ref } from 'vue';
 
-const search = ref('')
+const searchQuery = ref('')
 
 const logoSrc = new URL('../../assets/image/logo.png', import.meta.url);
 const logoSrcset = new URL('../../assets/image/logo.webp', import.meta.url);

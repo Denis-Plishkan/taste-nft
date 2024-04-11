@@ -1,4 +1,5 @@
 <template>
+  <router-link :to="{ name: 'artworkPage', params: { id: props.card.id } }">
   <div class="card">
     <div class="card__img">
       <PictureComponent :srcset="props.card.img.webp"  :src="props.card.img.default" :alt="'nft'" />
@@ -39,6 +40,7 @@
       </div>
     </div>
   </div>
+  </router-link>
 </template>
 
 <script setup>
@@ -125,6 +127,7 @@ const getUserById = getId(props.card.userId);
   &__info-name {
     font-weight: 700;
     font-size: 20px;
+    color: #fff;
   }
 
   &__info-sold-wrapper, &__info-ending-wrapper {
@@ -139,8 +142,13 @@ const getUserById = getId(props.card.userId);
     color: rgba(255, 255, 255, 0.5);
   }
 
+  &__info-ending-time {
+    color: #fff;
+  }
+
   &__info-sold-current {
     margin-right: 32px;
+    color: #fff;
   }
 
   &__info-name {

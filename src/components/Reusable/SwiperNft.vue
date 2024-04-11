@@ -15,6 +15,8 @@
           modifier: -1,
           slideShadows: false,
         }"
+          @slideChange="onSlideChange($event)"
+
       >
         <swiper-slide v-for="(card, index) in props.cards.slice(0, 5)" :key="index">
           <div class="hero-swiper__img">
@@ -29,7 +31,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue'
+import { onMounted, ref } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation, EffectCoverflow, Pagination } from 'swiper/modules'
 import 'swiper/css'
@@ -37,15 +39,29 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 
-const props = defineProps(['cards'])
-const swipers = ref(false)
+const props = defineProps(['cards']);
+const emits = defineEmits(['update'])
+const swipers = ref(false);
+let activeCard = null;
 
 onMounted(()=> {
+  activeCard = props.cards[0];
+
+  emits('update', activeCard);
+
+
   setTimeout(()=> {
-    swipers.value = true
+    swipers.value = true;
   }, 100)
 })
 
+const onSlideChange = (swiper) => {
+  if (swiper) {
+    const activeIndex = swiper.activeIndex;
+    activeCard = props.cards[activeIndex];
+    emits('update', activeCard);
+  }
+}
 
 </script>
 
@@ -105,9 +121,6 @@ onMounted(()=> {
   }
 
 }
-
-
-
 
 </style>
 
