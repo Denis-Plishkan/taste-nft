@@ -1,4 +1,5 @@
 <template>
+  <router-link :to="{ name: 'creatorPage', params: { id: props.user.id } }">
   <div class="user-card">
     <div class="user-card__img">
       <PictureComponent class="user-card__image" :srcset="props.user.img.webp"  :src="props.user.img.default" :alt="'user'"/>
@@ -7,6 +8,7 @@
     <p class="user-card__user-name">@{{ props.user.userName }}</p>
     <p class="user-card__sales">{{ props.user.sales }}</p>
   </div>
+  </router-link>
 </template>
 
 <script setup>
@@ -54,6 +56,7 @@ const props = defineProps({
     font-weight: 700;
     font-size: 20px;
     margin-bottom: 14px;
+    color: #fff;
   }
 
   &__user-name {

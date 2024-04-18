@@ -6,8 +6,8 @@
 </template>
 
 <script setup>
-
 import BaseSvg from "@/components/Base/BaseSvg.vue";
+
 </script>
 
 <style lang="scss">
@@ -23,6 +23,7 @@ import BaseSvg from "@/components/Base/BaseSvg.vue";
     border-radius: 99px;
     box-shadow: 0 15px 30px 0 rgba(20, 102, 204, 0.16);
     cursor: pointer;
+    position: relative;
 
     svg {
       width: 8px;

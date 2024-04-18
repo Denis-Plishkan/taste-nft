@@ -42,6 +42,13 @@
     right: 30px;
     top: 54px;
 
+    @include media-breakpoint-down(sm) {
+      top: 35px;
+    }
+
+    @include media-breakpoint-down(xxs) {
+      right: 10px;
+    }
   }
 
   &__text {
@@ -161,11 +168,42 @@
       z-index: 1;
       cursor: pointer;
     }
+
+    iframe {
+      width: 625px;
+      height: 259px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -40%);
+      z-index: 2;
+
+      @include media-breakpoint-down(sm) {
+        width: 500px;
+        height: 220px;
+
+      }
+
+      @include media-breakpoint-down(xs) {
+        width: 300px;
+      }
+
+      @include media-breakpoint-down(xxs) {
+        width: 273px;
+        height: 210px;
+      }
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+    }
   }
 
   &__card-svg-container {
     position: relative;
-    top: 50%;
+    top: -48%;
     left: 50%;
     transform: translate(-50%, -50%);
 

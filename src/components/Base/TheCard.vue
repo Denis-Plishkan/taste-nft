@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ name: 'artworkPage', params: { id: props.card.id } }">
+  <router-link class="card__link" :to="{ path: `/artwork/${props.card.id}` }">
   <div class="card">
     <div class="card__img">
       <PictureComponent :srcset="props.card.img.webp"  :src="props.card.img.default" :alt="'nft'" />
@@ -84,6 +84,12 @@ const getUserById = getId(props.card.userId);
       @include media-breakpoint-down(sm) {
         max-height: 700px;
       }
+    }
+  }
+
+  &__link {
+    @include media-breakpoint-down(xs) {
+      width: 100%;
     }
   }
 

@@ -26,6 +26,7 @@ const userSrcset = new URL('../../assets/image/users/user8.webp', import.meta.ur
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/media-breakpoints";
 
 .bought-card {
   display: flex;
@@ -46,10 +47,29 @@ const userSrcset = new URL('../../assets/image/users/user8.webp', import.meta.ur
     }
   }
 
+  &__left-info {
+    @include media-breakpoint-down(xs) {
+      display: none;
+    }
+  }
+
   &__left-info-name {
     font-weight: 700;
     font-size: 20px;
     margin-bottom: 7px;
+
+    @include media-breakpoint-down(sm) {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: inline-block;
+      max-width: calc(11ch + 1em);
+    }
+
+    @include media-breakpoint-down(xs) {
+      max-width: calc(6ch + 1em);
+    }
+
   }
 
   &__left-info-date {}

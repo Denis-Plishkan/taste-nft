@@ -15,9 +15,10 @@ const router = createRouter({
       component:  () => import("@/pages/ProfilePage.vue"),
     },
     {
-      path: '/creator',
-      name: 'creator',
+      path: '/creator/:id',
+      name: 'creatorPage',
       component: () => import("@/pages/CreatorPage.vue"),
+      props: true,
     },
     {
       path: '/artwork/:id',
