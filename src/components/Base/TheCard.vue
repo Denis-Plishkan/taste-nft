@@ -4,7 +4,12 @@
     <div class="card__img">
       <PictureComponent :srcset="props.card.img.webp"  :src="props.card.img.default" :alt="'nft'" />
       <div class="card__img-info-card">
-        <UserInfo class="card__wrapper-user-info">
+        <UserInfo v-if="isProfilePage" :is-card="true" class="card__wrapper-user-state">
+          <template v-slot:state>
+            <p :class="colorState(props.card.state)">{{ props.card.state }}</p>
+          </template>
+        </UserInfo>
+        <UserInfo v-else class="card__wrapper-user-info">
           <template v-slot:image>
             <div class="card__wrapper-image">
               <PictureComponent class="card__img-image" :srcset="getUserById().img.webp"  :src="getUserById().img.default" :alt="'user'" />
@@ -17,6 +22,11 @@
             <p class="card__info-user-name">@{{ getUserById().userName }}</p>
           </template>
         </UserInfo>
+      </div>
+      <div v-if="isProfilePage" class="card__info-button-wrapper">
+        <UIButtonRound v-for="item in buttonsArray" :key="item" @click.prevent="showButtons(props.card.state)" :class="{ 'active': buttonsOpen && item === 'button-settings' }">
+          <BaseSvg :id="item"></BaseSvg>
+        </UIButtonRound>
       </div>
     </div>
     <div class="card__info">
@@ -48,18 +58,49 @@
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 import UserInfo from "@/components/Reusable/UserInfo.vue";
 import {users} from "@/dataBase.js";
+import {useRoute} from "vue-router";
+import UIButtonRound from "@/components/UI/UIButtonRound.vue";
+import BaseSvg from "@/components/Base/BaseSvg.vue";
+import {ref} from "vue";
 
 const logoCardSrc = new URL('../../assets/image/logo-card.png', import.meta.url);
 const logoCardSrcset = new URL('../../assets/image/logo-card.webp', import.meta.url);
+
+const route = useRoute();
+const isProfilePage = route.path === '/profile';
 
 const props = defineProps({
   card: Object,
   search: Object,
 });
 
+const buttonsArray = ref(["button-settings"]);
+let buttonsOpen = false;
+
 const getId = (id) => () => users.find(item => item.id === id);
 
 const getUserById = getId(props.card.userId);
+
+function colorState(state) {
+  if(state === 'Approved') {
+    return "green";
+  } else if (state === 'Declined') {
+    return "red";
+  } else if (state === 'On moderation') {
+    return "yellow";
+  }
+}
+
+function showButtons(state) {
+  buttonsOpen = !buttonsOpen;
+  if (state === "Approved") {
+    buttonsArray.value = buttonsOpen ? ["button-settings"] : ["button-settings"];
+  } else if (state === "Declined") {
+    buttonsArray.value = buttonsOpen ? ["button-settings", "button-clock", "button-pencil", "button-basket"] : ["button-settings"];
+  } else if (state === "On moderation") {
+    buttonsArray.value = buttonsOpen ? ["button-settings", "button-clock"] : ["button-settings"];
+  }
+}
 
 </script>
 
@@ -136,6 +177,19 @@ const getUserById = getId(props.card.userId);
     color: #fff;
   }
 
+  &__info-button-wrapper {
+    position: absolute;
+    top: 21px;
+    right: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    .active {
+      opacity: 0.5;
+    }
+  }
+
   &__info-sold-wrapper, &__info-ending-wrapper {
     display: flex;
     justify-content: space-between;
@@ -177,5 +231,17 @@ const getUserById = getId(props.card.userId);
       width: 100%;
     }
   }
+}
+
+.green {
+  color: #86D084;
+}
+
+.red {
+  color: #FF5E54;
+}
+
+.yellow {
+  color: #FFBA09;
 }
 </style>

@@ -24,6 +24,8 @@
   min-width: 653px;
   padding: 50px;
   z-index: 2;
+  max-height: 80%;
+  overflow: auto;
 
   @include media-breakpoint-down(sm) {
     height: 300px;
@@ -227,5 +229,9 @@
     font-size: 14px;
     padding: 12px 28px;
   }
+}
+
+.popup::-webkit-scrollbar {
+  display: none;
 }
 </style>

@@ -30,10 +30,14 @@ import {ref, watchEffect} from "vue";
 const swiperSlidesPerView = ref(5.2);
 
 watchEffect(() => {
-  if (window.innerWidth < 586) {
-    swiperSlidesPerView.value = 1.2;
+  if(window.innerWidth < 380) {
+    swiperSlidesPerView.value = 1.3;
+  } else if (window.innerWidth < 510) {
+    swiperSlidesPerView.value = 1.5;
+  } else if (window.innerWidth < 616) {
+    swiperSlidesPerView.value = 2.0;
   } else if (window.innerWidth < 834) {
-    swiperSlidesPerView.value = 2.2;
+    swiperSlidesPerView.value = 2.5;
   } else if (window.innerWidth < 1080) {
     swiperSlidesPerView.value = 3.2;
   } else if (window.innerWidth < 1320) {

@@ -94,7 +94,7 @@
 
 <script setup>
 import TheHeader from "@/components/Base/TheHeader.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {cards, users} from "@/dataBase.js";
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 import UserInfo from "@/components/Reusable/UserInfo.vue";
@@ -145,7 +145,7 @@ function clearHeaderInput() {
 
 function currentButton(item) {
   if (item === 'left') {
-    const artworkUrl = `/#creator/${userId}`;
+    const artworkUrl = `/taste-nft/#creator/${userId}`;
     window.open(artworkUrl, '_blank');
   } else if (item === 'center') {
     toast('Скопировано в буфер обмена!')
@@ -160,13 +160,19 @@ function filterUserCard(item) {
   } else if (item === 'Collected') {
     userCards.value = originalUserCards.value.filter(card => card.ending === '')
   }
-
-  console.log(item)
 }
 
 function isButtonSelected(item) {
-  return selectedButton.value === item ? 'selected' : '';
+  if (!selectedButton.value && item === UiButtonArray[0]) {
+    return 'selected';
+  } else {
+    return selectedButton.value === item ? 'selected' : '';
+  }
 }
+
+onMounted(() => {
+  filterUserCard('Created');
+});
 </script>
 
 <style lang="scss">
@@ -238,6 +244,10 @@ function isButtonSelected(item) {
     font-size: 14px;
     line-height: 129%;
     color: rgba(255, 255, 255, 0.5);
+
+    @include media-breakpoint-down(xxs) {
+      font-size: 8px;
+    }
   }
 
   &__hero-description {

@@ -76,7 +76,7 @@
       </div>
 
       <div class="nft-cards__wrapper">
-          <TheCard v-for="(card, index) in cardsRef.slice(0, 8)" :key="index" :card="card">
+          <TheCard v-for="(card, index) in sortedCards.slice(0, 8)" :key="index" :card="card">
           </TheCard>
       </div>
     </section>
@@ -118,7 +118,6 @@ const currentUser = ref({})
 const inputValue = ref('');
 const startCards = ref(4);
 const id = ref(0);
-const cardsRef = ref(cards);
 
 const buttonArray = ['left', 'center', 'right'];
 const dropdownArray = ['Recently added', 'Auctions'];
@@ -127,27 +126,28 @@ const listAuctions = ['Auctions', 'Declined', 'Process'];
 
 const dropdownValues = ref(['Recently added', 'Auctions']);
 const isDropdownOpen = ref([false, false]);
+let sortedCards = ref([...cards]);
 
 function currentLi(item, index) {
   dropdownValues.value[index] = item;
   if(item === 'Price') {
-    cardsRef.value.sort((a, b) => {
+    sortedCards.value.sort((a, b) => {
       return b.price - a.price;
     })
   } else if(item === 'Sold') {
-    cardsRef.value.sort((a, b) => {
+    sortedCards.value.sort((a, b) => {
       const aValue = convertSoldToNumber(a.sold);
       const bValue = convertSoldToNumber(b.sold);
       return aValue - bValue;
     })
   } else if(item === 'Recently added' || item === 'Auctions') {
-    cardsRef.value = cards;
+    sortedCards.value = cards;
   } else if(item === 'Declined') {
-    cardsRef.value = cards;
-    cardsRef.value = cardsRef.value.filter(cards => cards.state === 'Declined')
+    sortedCards.value = cards;
+    sortedCards.value = sortedCards.value.filter(cards => cards.state === 'Declined')
   } else if(item === 'Process') {
-    cardsRef.value = cards;
-    cardsRef.value = cardsRef.value.filter(cards => cards.ending === '')
+    sortedCards.value = cards;
+    sortedCards.value = sortedCards.value.filter(cards => cards.ending === '')
   }
 
 }
@@ -161,7 +161,7 @@ function convertSoldToNumber(soldString) {
 }
 
 function filterCards(value) {
-  inputValue.value = value
+  inputValue.value = value;
   const query = value.toLowerCase();
   filteredCards.value = cards.filter(card => {
     return card.name.toLowerCase().includes(query);
@@ -184,7 +184,7 @@ function loadCards() {
 
 function currentButton(item) {
   if (item === 'left') {
-    const artworkUrl = `/#artwork/${id.value}`;
+    const artworkUrl = `/taste-nft/#artwork/${id.value}`;
     window.open(artworkUrl, '_blank');
   } else if (item === 'center') {
     toast('Скопировано в буфер обмена!')
@@ -255,6 +255,9 @@ function toggleDropdown(index) {
 .nft-info {
   &__button-vue {
     padding: 12px 32px;
+    @include media-breakpoint-down(xs) {
+      padding: 12px 5px;
+    }
   }
 
   &__bottom {

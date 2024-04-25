@@ -160,7 +160,7 @@ function clearHeaderInput() {
 
 function currentButton(item) {
   if (item === 'left') {
-    const artworkUrl = `/#artwork/${currentURL.slice(9)}`;
+    const artworkUrl = `/taste-nft/#artwork/${currentURL.slice(9)}`;
     window.open(artworkUrl, '_blank');
   } else if (item === 'center') {
     toast('Скопировано в буфер обмена!')

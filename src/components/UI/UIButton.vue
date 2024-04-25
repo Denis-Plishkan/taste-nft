@@ -8,7 +8,7 @@
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
   .button {
     background: linear-gradient(270deg, #8743ff 0%, #4136f1 100%);
@@ -21,10 +21,6 @@
       opacity: 0.5;
       cursor: not-allowed;
       pointer-events: none;
-    }
-
-    @media(max-width: 576px) {
-      padding: 8px;
     }
 
   }

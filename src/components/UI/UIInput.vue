@@ -29,7 +29,7 @@ function clearInput() {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 @import "@/assets/scss/media-breakpoints";
 

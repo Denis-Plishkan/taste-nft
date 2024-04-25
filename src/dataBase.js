@@ -118,7 +118,7 @@ export const cards = [
         description: 'This NFT will take you on an exhilarating cosmic journey through uncharted corners of the Universe. Visual effects and impressive colors will turn your screen into a window to space.',
         userId: 0,
         price: 1230.54,
-        state: 'On moderation',
+        state: 'Declined',
 
     },
     {
@@ -239,6 +239,21 @@ export const cards = [
         userId: 7,
         price: 1678.54,
         state: 'Approved',
+
+    },
+    {
+        id: 10,
+        img: {
+            default: new URL('./assets/image/card/nft11.png', import.meta.url),
+            webp: new URL('./assets/image/card/nft11.webp', import.meta.url)
+        },
+        name: 'Crypto Credo',
+        sold: '1.9M',
+        ending: '05h 02m 41s',
+        description: 'This NFT features enchanting landscapes where fantasy meets reality. It creates an atmosphere of mysticism and magic, inviting viewers on a captivating journey through the realm of imagination.',
+        userId: 0,
+        price: 1800.54,
+        state: 'On moderation',
 
     },
 
