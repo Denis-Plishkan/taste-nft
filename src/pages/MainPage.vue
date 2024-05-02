@@ -2,7 +2,8 @@
   <TheHeader @update-input-value="filterCards" @clearInput="clearHeaderInput($event)"/>
   <div class="container">
     <section class="hero">
-      <UIPopup v-if="inputValue" class="filtered-cards">
+
+      <div v-if="inputValue" class="filtered-cards">
         <div  >
           <div v-if="filteredCards.length > 0" class="filtered-cards__wrapper">
             <TheCard  v-for="(card, index) in filteredCards.slice(0, startCards)" :key="index" :card="card"/>
@@ -17,7 +18,8 @@
           </div>
 
         </div>
-      </UIPopup>
+      </div>
+
       <div class="hero__wrapper">
         <div class="hero__wrapper-left">
           <UserInfo class="user-info__hero-wrapper">
@@ -49,9 +51,7 @@
                   <UIButton class="nft-info__button-vue">View</UIButton>
                 </router-link>
 
-                <UISmallButton v-for="item in buttonArray" :key="item" @click="currentButton(item)" >
-                  <BaseSvg :id="item"/>
-                </UISmallButton>
+                <UISmallButton :id="id"/>
 
               </div>
             </div>
@@ -65,8 +65,8 @@
 
     <section class="nft-cards">
       <div class="nft-cards__dropdowns">
-        <UIDropdown v-for="(item, index) in dropdownArray" :key="item" @click="toggleDropdown(index)">{{ dropdownValues[index] }}
-          <list v-if="item === 'Recently added' && isDropdownOpen[index]" class="dropdown__list">
+        <UIDropdown v-for="(item, index) in dropdownArray" :key="item" @click="toggleDropdown(index)" :class="{ 'dropdown-item-left': index === 0 }" :isOpen="isDropdownOpen[index]">{{ dropdownValues[index] }}
+          <list v-if="item === 'Recently added' && isDropdownOpen[index]" class="dropdown__list dropdown__list-left">
             <li v-for="li in listRecently" :key="li" @click="currentLi(li, index)">{{ li }}</li>
           </list>
           <list v-else-if="item === 'Auctions' && isDropdownOpen[index]" class="dropdown__list">
@@ -96,7 +96,6 @@ import NftInfo from "@/components/Reusable/NftInfo.vue";
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 import UIButton from "@/components/UI/UIButton.vue";
 import UISmallButton from "@/components/UI/UISmallButton.vue";
-import BaseSvg from "@/components/Base/BaseSvg.vue";
 import TheCard from "@/components/Base/TheCard.vue";
 import { cards, users } from "@/dataBase.js";
 import SwiperNft from "@/components/Reusable/SwiperNft.vue";
@@ -106,8 +105,6 @@ import TheHeader from "@/components/Base/TheHeader.vue";
 import { ref } from 'vue';
 import UIButtonShow from "@/components/UI/UIButtonShow.vue";
 import UIPopup from "@/components/UI/UIPopup.vue";
-import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
 
 const logoSoldSrc = new URL('../assets/image/logo-sold.png', import.meta.url);
 const logoSoldSrcset = new URL('../assets/image/logo-sold.webp', import.meta.url);
@@ -119,7 +116,6 @@ const inputValue = ref('');
 const startCards = ref(4);
 const id = ref(0);
 
-const buttonArray = ['left', 'center', 'right'];
 const dropdownArray = ['Recently added', 'Auctions'];
 const listRecently = ['Recently added', 'Price', 'Sold'];
 const listAuctions = ['Auctions', 'Declined', 'Process'];
@@ -182,15 +178,6 @@ function loadCards() {
   startCards.value += 4;
 }
 
-function currentButton(item) {
-  if (item === 'left') {
-    const artworkUrl = `/taste-nft/#artwork/${id.value}`;
-    window.open(artworkUrl, '_blank');
-  } else if (item === 'center') {
-    toast('Скопировано в буфер обмена!')
-  }
-}
-
 function toggleDropdown(index) {
   isDropdownOpen.value[index] = !isDropdownOpen.value[index];
 }
@@ -229,18 +216,14 @@ function toggleDropdown(index) {
   }
 
   &__wrapper-right {
-    max-width: 789px;
+    max-width: 790px;
 
     @include media-breakpoint-down(my) {
       max-width: 581px;
     }
 
-    @include media-breakpoint-down(md) {
-      max-width: 579px;
-    }
-
     @include media-breakpoint-down(sm) {
-      max-width: 500px;
+      max-width: 504px;
     }
 
     @include media-breakpoint-down(xs) {
@@ -248,7 +231,7 @@ function toggleDropdown(index) {
     }
 
     @include media-breakpoint-down(xxs) {
-      max-width: 300px;
+      max-width: 302px;
     }
   }
 }
@@ -349,10 +332,11 @@ function toggleDropdown(index) {
 
 .filtered-cards {
   width: 100%;
-  top: -39px;
-  left: 0;
   transform: none;
   padding: 30px 5px;
+  background: #1d2228;
+  height: 100%;
+  overflow: auto;
 
   &__wrapper {
     display: flex;
@@ -365,13 +349,12 @@ function toggleDropdown(index) {
       font-weight: 700;
       font-size: 24px;
     }
-
-
   }
 
   &__button {
     margin-top: 24px;
     text-align: center;
+    margin-bottom: 60px;
   }
 
 }
@@ -386,7 +369,7 @@ function toggleDropdown(index) {
     border-radius: 20px;
     box-shadow: 0 15px 30px 0 rgba(20, 102, 204, 0.16);
     width: fit-content;
-    padding: 12px 24px;
+    padding: 12px 30px;
     font-weight: 700;
     font-size: 14px;
     left: 0;
@@ -396,6 +379,15 @@ function toggleDropdown(index) {
       margin-top: 6px;
     }
   }
+
+  &__list-left {
+    min-width: 170px;
+  }
+}
+
+.dropdown-item-left {
+  min-width: 170px;
+  justify-content: center;
 }
 </style>
 

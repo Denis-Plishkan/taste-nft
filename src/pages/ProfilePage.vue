@@ -2,7 +2,8 @@
   <TheHeader @update-input-value="filterCards" @clearInput="clearHeaderInput($event)"/>
   <div class="container">
     <section class="profile">
-      <UIPopup v-if="inputValue" class="filtered-cards">
+
+      <div v-if="inputValue" class="filtered-cards">
         <div  >
           <div v-if="filteredCards.length > 0" class="filtered-cards__wrapper">
             <TheCard  v-for="(card, index) in filteredCards.slice(0, startCards)" :key="index" :card="card"/>
@@ -17,7 +18,7 @@
           </div>
 
         </div>
-      </UIPopup>
+      </div>
 
       <div class="profile__hero">
         <div class="profile__hero-wrapper">
@@ -47,9 +48,7 @@
                 <p class="profile__hero-follow-text">Following</p>
               </div>
 
-              <UISmallButton v-for="item in buttonArray" :key="item" @click="currentButton(item)" >
-                <BaseSvg :id="item"/>
-              </UISmallButton>
+              <UISmallButton :id="0" />
             </div>
           </div>
 
@@ -103,7 +102,6 @@ import BaseSvg from "@/components/Base/BaseSvg.vue";
 import UISmallButton from "@/components/UI/UISmallButton.vue";
 import UserInfo from "@/components/Reusable/UserInfo.vue";
 import PictureComponent from "@/components/Base/PictureComponent.vue";
-import {toast} from "vue3-toastify";
 import UIButtonText from "@/components/UI/UIButtonText.vue";
 
 const inputValue = ref('');
@@ -113,8 +111,6 @@ const selectedButton = ref(null);
 const userCards = ref(cards.filter(card => card.userId === 0));
 const originalUserCards = ref(userCards.value);
 
-
-const buttonArray = ['left', 'center', 'right'];
 const UiButtonArray = ['Created', 'Collected', 'Bids'];
 
 function filterCards(value) {
@@ -125,15 +121,6 @@ function filterCards(value) {
   })
 }
 
-function currentButton(item) {
-  if (item === 'left') {
-    const artworkUrl = `/taste-nft/#creator/0`;
-    window.open(artworkUrl, '_blank');
-  } else if (item === 'center') {
-    toast('Скопировано в буфер обмена!')
-    console.log('center')
-  }
-}
 
 function clearHeaderInput() {
   inputValue.value = '';

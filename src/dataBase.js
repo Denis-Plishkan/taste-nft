@@ -129,7 +129,7 @@ export const cards = [
         },
         name: 'Digital Dynasty',
         sold: '1.3M',
-        ending: '05h 02m 41s',
+        ending: '04h 02m 41s',
         description: 'This NFT is an experimental exploration in the realm of digital and visual art. Blending reality and virtuality, it raises questions about the nature of reality and imagination.',
         userId: 1,
         price: 1100.54,
@@ -159,7 +159,7 @@ export const cards = [
         },
         name: 'Nifty Nomads',
         sold: '0.8M',
-        ending: '05h 02m 41s',
+        ending: '21h 02m 41s',
         description: 'In this NFT, you\'ll dive into a world of magical forest filled with mysterious creatures and wondrous phenomena. Every corner of this mystical place is full of mysteries and magic.',
         userId: 2,
         price: 900.54,
@@ -174,7 +174,7 @@ export const cards = [
         },
         name: 'Pixel Pioneers',
         sold: '0.8M',
-        ending: '05h 02m 41s',
+        ending: '12h 02m 41s',
         description: 'This NFT is an exploration of digital aesthetics using bright colors and geometric shapes. It\'s designed to evoke a sense of electric excitement and extraordinary dreams.',
         userId: 3,
         price: 950.54,
@@ -204,7 +204,7 @@ export const cards = [
         },
         name: 'Token Trove',
         sold: '0.9M',
-        ending: '05h 02m 41s',
+        ending: '07h 02m 41s',
         description: 'This NFT is a visual journey through urban landscapes and architecture, where modern buildings and streets blend into one harmonious picture. It\'s meant to inspire viewers to bring their dreams to life.',
         userId: 5,
         price: 1000.54,
@@ -219,7 +219,7 @@ export const cards = [
         },
         name: 'Artistic Atoms',
         sold: '1.8M',
-        ending: '05h 02m 41s',
+        ending: '20h 02m 41s',
         description: 'This NFT showcases unique digital representations of plants and animals, created using advanced visualization technologies. It immerses the viewer in a virtual world of nature and prompts reflections on the future of ecosystems.',
         userId: 6,
         price: 1608.54,
@@ -249,12 +249,61 @@ export const cards = [
         },
         name: 'Crypto Credo',
         sold: '1.9M',
-        ending: '05h 02m 41s',
+        ending: '12h 02m 41s',
         description: 'This NFT features enchanting landscapes where fantasy meets reality. It creates an atmosphere of mysticism and magic, inviting viewers on a captivating journey through the realm of imagination.',
         userId: 0,
         price: 1800.54,
         state: 'On moderation',
 
+    },
+
+]
+
+export const followers = [
+    {
+        id: 1,
+        name: 'User Name',
+        userName: 'username',
+        img: {
+            default: new URL('./assets/image/users/user1.png', import.meta.url),
+            webp: new URL('./assets/image/users/user1.webp', import.meta.url)
+        }
+    },
+    {
+        id: 2,
+        name: 'User Name2',
+        userName: 'username2',
+        img: {
+            default: new URL('./assets/image/followers/user2.png', import.meta.url),
+            webp: new URL('./assets/image/followers/user2.webp', import.meta.url)
+        }
+    },
+    {
+        id: 3,
+        name: 'User Name3',
+        userName: 'username3',
+        img: {
+            default: new URL('./assets/image/followers/user3.png', import.meta.url),
+            webp: new URL('./assets/image/followers/user3.webp', import.meta.url)
+        }
+    },
+    {
+        id: 4,
+        name: 'User Name4',
+        userName: 'username4',
+        img: {
+            default: new URL('./assets/image/followers/user4.png', import.meta.url),
+            webp: new URL('./assets/image/followers/user4.webp', import.meta.url)
+        }
+    },
+    {
+        id: 5,
+        name: 'User Name5',
+        userName: 'username5',
+        img: {
+            default: new URL('./assets/image/followers/user5.png', import.meta.url),
+            webp: new URL('./assets/image/followers/user5.webp', import.meta.url)
+        }
     },
 
 ]

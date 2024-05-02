@@ -1,9 +1,10 @@
 <template>
+  <div v-if="isOpenPopup" class="test"></div>
   <TheHeader @update-input-value="filterCards" @clearInput="clearHeaderInput($event)"/>
   <div class="container">
     <section class="creator">
-      <UIPopup v-if="inputValue" class="filtered-cards">
-        <div  >
+
+        <div v-if="inputValue" class="filtered-cards">
           <div v-if="filteredCards.length > 0" class="filtered-cards__wrapper">
             <TheCard  v-for="(card, index) in filteredCards.slice(0, startCards)" :key="index" :card="card"/>
           </div>
@@ -15,9 +16,8 @@
               <p>Show all</p>
             </UIButtonShow>
           </div>
-
         </div>
-      </UIPopup>
+
       <div class="creator__hero">
         <div class="creator__hero-wrapper">
           <div class="creator__hero-left">
@@ -46,10 +46,39 @@
                 <p class="creator__hero-follow-text">Following</p>
               </div>
 
-              <UIButton class="nft-info__button-vue">Follow</UIButton>
-              <UISmallButton v-for="item in buttonArray" :key="item" @click="currentButton(item)" >
-                <BaseSvg :id="item"/>
-              </UISmallButton>
+              <UIButton class="nft-info__button-vue" @click="openFollowPopup">Follow</UIButton>
+
+              <UIPopup v-if="isFollow" class="followers__popup">
+                <BaseSvg :id="'cross'" @click="closeFollowPopup" class="popup__cross-icon"/>
+
+                <div class="creator-cards__buttons">
+                  <UIButtonText v-for="(item, index) in followersButtonArray" :key="item" :class="{ 'selected': index === 0 }" class="followers__button">{{ item }}</UIButtonText>
+                </div>
+
+                <div class="followers__wrapper" v-for="(item, index) in followers" :key="item">
+                  <UserInfo class="followers__wrapper-info">
+                    <template v-slot:image>
+                      <div class="user-info__image-img">
+                        <PictureComponent :srcset="item.img.webp" :src="item.img.default" :alt="'user'"/>
+                      </div>
+                    </template>
+                    <template v-slot:info-name>
+                      <p class="user-info__info-name">{{ item.name }}</p>
+                    </template>
+                    <template v-slot:info-user-name>
+                      <p class="user-info__info-user-name">@{{ item.userName }}</p>
+                    </template>
+                  </UserInfo>
+                  <UIButton @click="toggleFollowState(index)" class="followers__button-follow-popup" :class="{ 'unfollowed': buttonFollowState[index] === 'Unfollow' }">
+                    {{ buttonFollowState[index] }}
+                  </UIButton>
+                </div>
+
+
+              </UIPopup>
+
+              <UISmallButton :id='cardId' />
+
             </div>
         </div>
 
@@ -95,7 +124,7 @@
 <script setup>
 import TheHeader from "@/components/Base/TheHeader.vue";
 import {onMounted, ref} from "vue";
-import {cards, users} from "@/dataBase.js";
+import {cards, users, followers} from "@/dataBase.js";
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 import UserInfo from "@/components/Reusable/UserInfo.vue";
 import UIButton from "@/components/UI/UIButton.vue";
@@ -105,9 +134,8 @@ import TheCard from "@/components/Base/TheCard.vue";
 import UIButtonText from "@/components/UI/UIButtonText.vue";
 import UIButtonShow from "@/components/UI/UIButtonShow.vue";
 import UIPopup from "@/components/UI/UIPopup.vue";
-import {toast} from "vue3-toastify";
-import 'vue3-toastify/dist/index.css';
 import { useRoute } from 'vue-router';
+import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
 const route = useRoute();
 const userId = Number(route.params.id);
@@ -119,10 +147,13 @@ const startCards = ref(4);
 const userCards = ref(cards.filter(card => card.userId === userId));
 const selectedButton = ref(null);
 const originalUserCards = ref(userCards.value);
+const isFollow = ref(false)
+const buttonFollowState = ref(Array(followers.length).fill('Follow'));
+const cardId = ref(userCards.value.map(card => card.id));
+const isOpenPopup = ref(false);
 
-
-const buttonArray = ['left', 'center', 'right'];
 const UiButtonArray = ['Created', 'Collected'];
+const followersButtonArray = ['Following', 'Followers'];
 
 function filterCards(value) {
   inputValue.value = value;
@@ -137,20 +168,7 @@ function loadCards() {
 }
 
 function clearHeaderInput() {
-  console.log(inputValue.value)
   inputValue.value = '';
-  console.log('MainPage clear:', inputValue.value);
-
-}
-
-function currentButton(item) {
-  if (item === 'left') {
-    const artworkUrl = `/taste-nft/#creator/${userId}`;
-    window.open(artworkUrl, '_blank');
-  } else if (item === 'center') {
-    toast('Скопировано в буфер обмена!')
-    console.log('center')
-  }
 }
 
 function filterUserCard(item) {
@@ -168,6 +186,22 @@ function isButtonSelected(item) {
   } else {
     return selectedButton.value === item ? 'selected' : '';
   }
+}
+
+function toggleFollowState(index) {
+  buttonFollowState.value[index] = buttonFollowState.value[index] === 'Follow' ? 'Unfollow' : 'Follow';
+}
+
+function openFollowPopup() {
+  isFollow.value = true;
+  isOpenPopup.value = true;
+  disableBodyScroll();
+}
+
+function closeFollowPopup() {
+  isFollow.value = false;
+  isOpenPopup.value = false;
+  enableBodyScroll();
 }
 
 onMounted(() => {
@@ -286,6 +320,61 @@ onMounted(() => {
 
 .selected {
   color: white;
+}
+
+.followers {
+  &__popup {
+    min-height: 480px;
+    transform: translate(-50%, -20%);
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  &__wrapper:not(:last-child) {
+    margin-bottom: 32px;
+  }
+
+  &__wrapper-info {
+    gap: 12px;
+  }
+
+  &__button {
+    font-size: 24px;
+  }
+
+  &__button-follow-popup {
+    padding: 12px 32px;
+  }
+
+}
+
+.unfollowed {
+
+  background: linear-gradient(270deg, #8743ff 90%, #d8c2ff 100%);
+  background-clip: text;
+  color: transparent;
+  position: relative;
+
+  &:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(#30363D, #30363D) padding-box,
+        linear-gradient(270deg, #8743ff 90%, #d8c2ff 100%) border-box;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    display: inline-block;
+    z-index: -1;
+  }
 }
 
 </style>

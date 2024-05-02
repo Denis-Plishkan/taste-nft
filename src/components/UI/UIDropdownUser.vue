@@ -19,7 +19,7 @@
       </div>
     </template>
     <template v-slot:info-cross>
-      <BaseSvg id="user-dropdown-cross" class="dropdown-user__cross-icon"></BaseSvg>
+      <BaseSvg id="user-dropdown-cross" class="dropdown-user__cross-icon"/>
     </template>
 
   </UserInfo>
@@ -45,7 +45,7 @@
         </div>
       </template>
       <template v-slot:info-cross>
-        <BaseSvg id="user-dropdown-cross" class="dropdown-user__cross-icon"></BaseSvg>
+        <BaseSvg id="user-dropdown-cross" class="dropdown-user__cross-icon" :class="{'dropdown-user__cross-icon_active' : isOpen}"></BaseSvg>
       </template>
 
     </UserInfo>
@@ -54,7 +54,7 @@
       <router-link :to="{path: `/profile`}">
         <button class="dropdown-user__button">My profile</button>
       </router-link>
-      <button class="dropdown-user__button">Balance settings</button>
+      <button class="dropdown-user__button" @click="openBalanceSettings">Balance settings</button>
       <slot></slot>
     </div>
   </div>
@@ -68,15 +68,25 @@ import UserInfo from "@/components/Reusable/UserInfo.vue";
 import { users, cards } from "@/dataBase.js";
 import BaseSvg from "@/components/Base/BaseSvg.vue";
 import {ref} from "vue";
+import { disableBodyScroll } from 'body-scroll-lock';
 
 const logoSoldSrc = new URL('../../assets/image/logo-sold.png', import.meta.url);
 const logoSoldSrcset = new URL('../../assets/image/logo-sold.webp', import.meta.url);
 
-const isOpen = ref(false)
+const togglePopup = defineEmits(["togglePopup", "cardSold"]);
+
+const isOpen = ref(false);
 
 function toggleUserDropdown() {
   isOpen.value = !isOpen.value
 }
+
+function openBalanceSettings() {
+  togglePopup("update:openPopup");
+  togglePopup("update:cardSold", cards[0].sold);
+  disableBodyScroll();
+}
+
 
 </script>
 
@@ -88,6 +98,7 @@ function toggleUserDropdown() {
     &__wrapper {
       gap: 6px;
       position: relative;
+      cursor: pointer;
 
       @include media-breakpoint-down(sm) {
         justify-content: space-between;
@@ -113,7 +124,11 @@ function toggleUserDropdown() {
 
     &__cross-icon {
       width: 12px;
-      height: 12px;
+      height: 7px;
+    }
+
+    &__cross-icon_active {
+      transform: rotate(180deg);
     }
 
     &__info {

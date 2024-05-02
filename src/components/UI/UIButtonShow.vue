@@ -12,9 +12,9 @@
 .button-show {
 
   border-radius: 12px;
-  background: linear-gradient(270deg, #8743ff 0%, #4136f1 100%);
+  background: linear-gradient(270deg, rgba(135, 67, 255, 0.2) 0%, rgba(65, 54, 241, 0.2) 100%);
   padding: 12px 32px;
-  opacity: 0.2;
+
 
   p {
     font-weight: 700;

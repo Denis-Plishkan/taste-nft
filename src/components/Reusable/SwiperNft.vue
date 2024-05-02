@@ -104,6 +104,7 @@ const onSlideChange = (swiper) => {
 
   &__img {
     width: 519px;
+    margin-left: -4px;
 
   }
 
@@ -121,6 +122,7 @@ const onSlideChange = (swiper) => {
   }
 
 }
+
 
 </style>
 

@@ -1,12 +1,19 @@
 <template>
-  <div class="dropdown">
+  <div class="dropdown" @click="toggleDropdown">
     <slot></slot>
-    <BaseSvg :id="'dropdown-arrow'"/>
+    <BaseSvg :id="'dropdown-arrow'" :class="{'dropdown__arrow_active': isOpen}"/>
   </div>
 </template>
 
 <script setup>
 import BaseSvg from "@/components/Base/BaseSvg.vue";
+import { ref } from "vue";
+
+const isOpen = ref(false);
+
+const toggleDropdown = () => {
+  isOpen.value = !isOpen.value;
+}
 
 </script>
 
@@ -28,6 +35,10 @@ import BaseSvg from "@/components/Base/BaseSvg.vue";
     svg {
       width: 8px;
       height: 4px;
+    }
+
+    &__arrow_active {
+      transform: rotate(180deg);
     }
   }
 </style>

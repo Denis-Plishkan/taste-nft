@@ -25,6 +25,8 @@ const props = defineProps({
 </script>
 
 <style lang="scss" >
+@import "@/assets/scss/media-breakpoints";
+
 .user-info {
   &__wrapper {
     display: flex;
@@ -35,6 +37,7 @@ const props = defineProps({
     display: flex;
     flex-direction: column;
     gap: 6px;
+
   }
 
   &__state {

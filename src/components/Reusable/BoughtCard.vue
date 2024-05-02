@@ -72,10 +72,12 @@ const userSrcset = new URL('../../assets/image/users/user8.webp', import.meta.ur
 
   }
 
-  &__left-info-date {}
-  font-weight: 500;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+  &__left-info-date {
+    font-weight: 500;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
 }
 
 </style>

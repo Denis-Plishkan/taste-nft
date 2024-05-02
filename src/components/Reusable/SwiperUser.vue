@@ -30,11 +30,11 @@ import {ref, watchEffect} from "vue";
 const swiperSlidesPerView = ref(5.2);
 
 watchEffect(() => {
-  if(window.innerWidth < 380) {
+  if(window.innerWidth < 410) {
     swiperSlidesPerView.value = 1.3;
-  } else if (window.innerWidth < 510) {
+  } else if (window.innerWidth < 525) {
     swiperSlidesPerView.value = 1.5;
-  } else if (window.innerWidth < 616) {
+  } else if (window.innerWidth < 650) {
     swiperSlidesPerView.value = 2.0;
   } else if (window.innerWidth < 834) {
     swiperSlidesPerView.value = 2.5;
@@ -43,7 +43,7 @@ watchEffect(() => {
   } else if (window.innerWidth < 1320) {
     swiperSlidesPerView.value = 4.2;
   } else {
-    swiperSlidesPerView.value = 5.2;
+    swiperSlidesPerView.value = 5.07;
   }
 })
 
@@ -81,5 +81,8 @@ watchEffect(() => {
   height: 5px;
 }
 
+.swiper-horizontal {
+  padding-right: 34px;
+}
 
 </style>

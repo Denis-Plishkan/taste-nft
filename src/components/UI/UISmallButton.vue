@@ -1,10 +1,28 @@
 <template>
-  <button class="small-button">
-      <slot></slot>
+  <button class="small-button" v-for="item in buttonArray" :key="item" @click="currentButton(item)">
+    <BaseSvg :id="item"/>
   </button>
 </template>
 
 <script setup>
+import BaseSvg from "@/components/Base/BaseSvg.vue";
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
+const props = defineProps({
+  id: Number,
+});
+
+const buttonArray = ['left', 'center', 'right'];
+
+function currentButton(item) {
+  if (item === 'left') {
+    const artworkUrl = `/taste-nft/#artwork/${props.id}`;
+    window.open(artworkUrl, '_blank');
+  } else if (item === 'center') {
+    toast('Скопировано в буфер обмена!')
+  }
+}
 
 </script>
 

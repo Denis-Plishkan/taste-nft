@@ -1,5 +1,5 @@
 <template>
-  <router-link class="card__link" :to="{ path: `/artwork/${props.card.id}` }">
+  <router-link class="card__link" :to="{ path: `/artwork/${props.card.id}` }" @click="scrollToTop">
   <div class="card">
     <div class="card__img">
       <PictureComponent :srcset="props.card.img.webp"  :src="props.card.img.default" :alt="'nft'" />
@@ -45,7 +45,7 @@
           Ending in:
         </p>
         <p class="card__info-ending-time">
-          {{ props.card.ending }}
+          {{ remainingTimes.id ? remainingTimes.id : 'loading...' }}
         </p>
       </div>
     </div>
@@ -61,7 +61,7 @@ import {users} from "@/dataBase.js";
 import {useRoute} from "vue-router";
 import UIButtonRound from "@/components/UI/UIButtonRound.vue";
 import BaseSvg from "@/components/Base/BaseSvg.vue";
-import {ref} from "vue";
+import {ref, onMounted} from "vue";
 
 const logoCardSrc = new URL('../../assets/image/logo-card.png', import.meta.url);
 const logoCardSrcset = new URL('../../assets/image/logo-card.webp', import.meta.url);
@@ -75,6 +75,7 @@ const props = defineProps({
 });
 
 const buttonsArray = ref(["button-settings"]);
+const remainingTimes = ref({});
 let buttonsOpen = false;
 
 const getId = (id) => () => users.find(item => item.id === id);
@@ -100,6 +101,56 @@ function showButtons(state) {
   } else if (state === "On moderation") {
     buttonsArray.value = buttonsOpen ? ["button-settings", "button-clock"] : ["button-settings"];
   }
+}
+
+const startTimeKey = 'startTime';
+let startTime = localStorage.getItem(startTimeKey) ? parseInt(localStorage.getItem(startTimeKey)) : Date.now();
+
+onMounted(() => {
+  Object.keys(props.card).forEach(cardId => {
+    calculateRemainingTime(cardId);
+  });
+  localStorage.setItem(startTimeKey, startTime.toString());
+
+});
+
+function calculateRemainingTime(cardId) {
+  let endingTimeString = props.card.ending.trim();
+
+  if (!endingTimeString) {
+    remainingTimes.value[cardId] = "Sale ended";
+    return;
+  }
+
+  const [hours, minutes, seconds] = endingTimeString.split(' ').map(part => parseInt(part));
+
+  let remainingMilliseconds = ((hours || 0) * 3600 + (minutes || 0) * 60 + (seconds || 0)) * 1000;
+
+  const intervalId = setInterval(() => {
+    const currentTime = Date.now();
+    const elapsedTime = currentTime - startTime;
+    const adjustedTime = remainingMilliseconds - elapsedTime;
+
+    if (adjustedTime <= 0) {
+      remainingTimes.value[cardId] = "Sale ended";
+      clearInterval(intervalId);
+      return;
+    }
+
+    const h = Math.floor(adjustedTime / 3600000);
+    const m = Math.floor(adjustedTime % 3600000 / 60000);
+    const s = Math.floor(adjustedTime % 60000 / 1000);
+    remainingTimes.value[cardId] = `${h}h ${m}m ${s}s`;
+
+  }, 1000);
+
+}
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 </script>

@@ -2,7 +2,7 @@
   <TheHeader @update-input-value="filterCards" @clearInput="clearHeaderInput($event)"/>
   <div class="container">
     <section class="artwork">
-      <UIPopup v-if="inputValue" class="filtered-cards">
+      <div v-if="inputValue" class="filtered-cards">
         <div  >
           <div v-if="filteredCards.length > 0" class="filtered-cards__wrapper">
             <TheCard  v-for="(card, index) in filteredCards.slice(0, startCards)" :key="index" :card="card"/>
@@ -17,7 +17,7 @@
           </div>
 
         </div>
-      </UIPopup>
+      </div>
       <div class="artwork__img">
         <PictureComponent :srcset="cards[$route.params.id].img.webp"  :src="cards[$route.params.id].img.default" :alt="'nft'"/>
         <div class="artwork__img-infos">
@@ -36,12 +36,28 @@
             </p>
 
             <p class="artwork__img-info-ending">
-              {{ cards[$route.params.id].ending }}
+              {{ remainingTime  }}
             </p>
           </div>
           <div class="artwork__img-info">
-            <UIButton class="artwork__img-button">Place a bid</UIButton>
+            <UIButton class="artwork__img-button" @click="placePopup">Place a bid</UIButton>
           </div>
+
+          <UIPopup v-if="isPlacePopup" class="place-popup">
+            <BaseSvg :id="'cross'" @click="closePlacePopup" class="popup__cross-icon"/>
+
+            <h3 class="popup__text artwork-popup__popup-text">Place a bid</h3>
+
+            <div class="artwork-third__form-sum">
+              <UIInputSum :text = '"Min.sum"' :sum = '"(1308.54$)"' :input-text = '"TASTE"' v-model="inputValue"/>
+            </div>
+
+            <div class="place-popup__button">
+              <UIButton @click="place">Place</UIButton>
+            </div>
+
+          </UIPopup>
+
         </div>
       </div>
         <div class="artwork__info-wrapper">
@@ -72,9 +88,8 @@
               <div class="nft-info__bottom">
 
                 <div class="nft-info__bottom-buttons nft-info__button">
-                  <UISmallButton v-for="item in buttonArray" :key="item" @click="currentButton(item)" >
-                    <BaseSvg :id="item"/>
-                  </UISmallButton>
+                  <UISmallButton :id="id"/>
+
                 </div>
               </div>
             </NftInfo>
@@ -85,10 +100,8 @@
               <BoughtCard v-for="index in 6" :key="index">
                 <p class="artwork__info-sold">
                   <PictureComponent :srcset="logoSoldSrcset" :src="logoSoldSrc" :alt="'logo'" /> {{ cards[$route.params.id].sold }} <span>({{cards[$route.params.id].price}}$)</span>
-                  <UIButton>
-                    <UISmallButton class="artwork__small-button">
-                      <BaseSvg :id="'left'"/>
-                    </UISmallButton>
+                  <UIButton class="artwork__info-wrapper-button">
+                    <BaseSvg id="left"/>
                   </UIButton>
                 </p>
               </BoughtCard>
@@ -120,12 +133,14 @@ import UISmallButton from "@/components/UI/UISmallButton.vue";
 import BaseSvg from "@/components/Base/BaseSvg.vue";
 import BoughtCard from "@/components/Reusable/BoughtCard.vue";
 import TheCard from "@/components/Base/TheCard.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import UIButtonShow from "@/components/UI/UIButtonShow.vue";
 import UIPopup from "@/components/UI/UIPopup.vue";
 import {toast} from "vue3-toastify";
 import 'vue3-toastify/dist/index.css';
 import { useRoute } from 'vue-router';
+import UIInputSum from "@/components/UI/UIInputSum.vue";
+import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
 const logoSoldSrc = new URL('../assets/image/logo-sold.png', import.meta.url);
 const logoSoldSrcset = new URL('../assets/image/logo-sold.webp', import.meta.url);
@@ -133,11 +148,73 @@ const logoSoldSrcset = new URL('../assets/image/logo-sold.webp', import.meta.url
 const filteredCards = ref(cards);
 const inputValue = ref('');
 const startCards = ref(4);
+const isPlacePopup = ref(false);
+const isOpenPopup = ref(false);
 
 const route = useRoute();
 const currentURL = route.path;
+const id = parseInt(currentURL.slice(9));
 
-const buttonArray = ['left', 'center', 'right']
+const startTimeKey = 'startTime';
+let startTime = localStorage.getItem(startTimeKey) ? parseInt(localStorage.getItem(startTimeKey)) : Date.now();
+
+const remainingTime = ref('loading...');
+
+onMounted(() => {
+  calculateRemainingTime();
+  localStorage.setItem(startTimeKey, startTime.toString());
+});
+
+function calculateRemainingTime() {
+  const card = cards[route.params.id];
+  let endingTimeString = card.ending.trim();
+
+  if (!endingTimeString) {
+    remainingTime.value = "Sale ended";
+    return;
+  }
+
+  const [hours, minutes, seconds] = endingTimeString.split(' ').map(part => parseInt(part));
+
+  let remainingMilliseconds = ((hours || 0) * 3600 + (minutes || 0) * 60 + (seconds || 0)) * 1000;
+
+  const intervalId = setInterval(() => {
+    const currentTime = Date.now();
+    const elapsedTime = currentTime - startTime;
+    const adjustedTime = remainingMilliseconds - elapsedTime;
+
+    if (adjustedTime <= 0) {
+      remainingTime.value = "Sale ended";
+      clearInterval(intervalId);
+      return;
+    }
+
+    const h = Math.floor(adjustedTime / 3600000);
+    const m = Math.floor(adjustedTime % 3600000 / 60000);
+    const s = Math.floor(adjustedTime % 60000 / 1000);
+    remainingTime.value = `${h}h ${m}m ${s}s`;
+
+  }, 1000);
+}
+
+function placePopup() {
+  isPlacePopup.value = true;
+  isOpenPopup.value = true;
+  disableBodyScroll();
+}
+
+function closePlacePopup() {
+  isPlacePopup.value = false;
+  isOpenPopup.value = false;
+  enableBodyScroll();
+}
+
+function place() {
+  toast('place is added');
+  isPlacePopup.value = false;
+  isOpenPopup.value = false;
+  enableBodyScroll();
+}
 
 function filterCards(value) {
   inputValue.value = value;
@@ -158,15 +235,6 @@ function clearHeaderInput() {
 
 }
 
-function currentButton(item) {
-  if (item === 'left') {
-    const artworkUrl = `/taste-nft/#artwork/${currentURL.slice(9)}`;
-    window.open(artworkUrl, '_blank');
-  } else if (item === 'center') {
-    toast('Скопировано в буфер обмена!')
-    console.log('center')
-  }
-}
 
 </script>
 
@@ -232,10 +300,9 @@ function currentButton(item) {
     left: 50%;
     transform: translate(-50%);
 
-    @include media-breakpoint-down(md) {
-      position: static;
-      transform: none;
-      margin: 0 auto;
+    @include media-breakpoint-down(ms) {
+      flex-direction: column;
+      min-width: 284px;
     }
 
     @include media-breakpoint-down(xxs) {
@@ -258,9 +325,21 @@ function currentButton(item) {
       top: 0;
       right: -20px;
 
-      @include media-breakpoint-down(xxs) {
-        right: -9px;
+      @include media-breakpoint-down(ms) {
+        width: 100%;
+        height: 3px;
+        right: 0;
+        top: 57px;
       }
+
+      @include media-breakpoint-down(xxs) {
+        top: 48px;
+      }
+    }
+
+    @include media-breakpoint-down(ms) {
+      width: 100%;
+      text-align: center;
     }
   }
 
@@ -310,6 +389,21 @@ function currentButton(item) {
     }
   }
 
+  &__info-wrapper-button {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    svg {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+  }
+
   &__info-sold {
     display: flex;
     gap: 6px;
@@ -343,7 +437,27 @@ function currentButton(item) {
     font-size: 18px;
     margin-bottom: 25px;
   }
+}
 
+.place-popup {
+  min-height: 268px;
+  min-width: 653px;
+
+  @include media-breakpoint-down(md) {
+    min-width: 120%;
+  }
+
+  @include media-breakpoint-down(xxs) {
+    min-width: 100%;
+  }
+
+  &__button {
+    text-align: center;
+    margin-top: 32px;
+    button {
+      padding: 12px 60px;
+    }
+  }
 }
 
 </style>
