@@ -95,7 +95,6 @@
 import TheHeader from "@/components/Base/TheHeader.vue";
 import {cards, users} from "@/dataBase.js";
 import { ref, onMounted } from "vue";
-import UIPopup from "@/components/UI/UIPopup.vue";
 import UIButtonShow from "@/components/UI/UIButtonShow.vue";
 import TheCard from "@/components/Base/TheCard.vue";
 import BaseSvg from "@/components/Base/BaseSvg.vue";
@@ -103,6 +102,7 @@ import UISmallButton from "@/components/UI/UISmallButton.vue";
 import UserInfo from "@/components/Reusable/UserInfo.vue";
 import PictureComponent from "@/components/Base/PictureComponent.vue";
 import UIButtonText from "@/components/UI/UIButtonText.vue";
+import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
 const inputValue = ref('');
 const filteredCards = ref(cards);
@@ -114,6 +114,12 @@ const originalUserCards = ref(userCards.value);
 const UiButtonArray = ['Created', 'Collected', 'Bids'];
 
 function filterCards(value) {
+  if(value !== '') {
+    disableBodyScroll();
+  } else {
+    enableBodyScroll();
+  }
+
   inputValue.value = value
   const query = value.toLowerCase();
   filteredCards.value = cards.filter(card => {

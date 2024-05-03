@@ -2,8 +2,8 @@
   <TheHeader @update-input-value="filterCards" @clearInput="clearHeaderInput($event)"/>
   <div class="container">
     <section class="artwork">
+
       <div v-if="inputValue" class="filtered-cards">
-        <div  >
           <div v-if="filteredCards.length > 0" class="filtered-cards__wrapper">
             <TheCard  v-for="(card, index) in filteredCards.slice(0, startCards)" :key="index" :card="card"/>
           </div>
@@ -15,9 +15,8 @@
               <p>Show all</p>
             </UIButtonShow>
           </div>
-
         </div>
-      </div>
+
       <div class="artwork__img">
         <PictureComponent :srcset="cards[$route.params.id].img.webp"  :src="cards[$route.params.id].img.default" :alt="'nft'"/>
         <div class="artwork__img-infos">
@@ -217,6 +216,12 @@ function place() {
 }
 
 function filterCards(value) {
+  if(value !== '') {
+    disableBodyScroll();
+  } else {
+    enableBodyScroll();
+  }
+
   inputValue.value = value;
   const query = value.toLowerCase();
   filteredCards.value = cards.filter(card => {
@@ -229,12 +234,8 @@ function loadCards() {
 }
 
 function clearHeaderInput() {
-  console.log(inputValue.value)
   inputValue.value = '';
-  console.log('MainPage clear:', inputValue.value);
-
 }
-
 
 </script>
 

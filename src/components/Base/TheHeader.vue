@@ -292,10 +292,7 @@
       <p class="popup__init-text">
         Initializing
       </p>
-
     </UIPopup>
-
-
 
   </header>
   <UIPopup class="form__popup" v-if="isPopupThirdOpen">
@@ -307,14 +304,14 @@
       <div class="form__top-wrapper">
         <div class="form__top">
           <label for="name">Name</label>
-          <input class="form__top-input" type="text" id="name" v-model="formInput.name"/>
+          <input class="form__top-input" type="text" id="name" v-model="formInput.name" @input="onInput('name', $event.target.value)"/>
           <span style="color: red;">{{ errorMessages.name }}</span>
         </div>
         <div class="form__top">
           <label for="name">Username</label>
           <div class="form__top-input-wrapper">
             <p class="form__top-symbol"> @ </p>
-            <input class="form__top-input form__top-input-symbol" type="text" id="userName" v-model="formInput.userName" />
+            <input class="form__top-input form__top-input-symbol" type="text" id="userName" v-model="formInput.userName" @input="onInput('userName', $event.target.value)" />
           </div>
           <span style="color: red;">{{ errorMessages.userName }}</span>
         </div>
@@ -322,7 +319,7 @@
       <div class="form__top-wrapper">
         <div class="form__top">
           <label for="name">Email</label>
-          <input class="form__top-input" type="text" id="email" v-model="formInput.email"/>
+          <input class="form__top-input" type="text" id="email" v-model="formInput.email" @input="onInput('email', $event.target.value)"/>
           <span style="color: red;">{{ errorMessages.email }}</span>
         </div>
         <div class="form__top">
@@ -333,7 +330,7 @@
 
       <div class="form__top">
         <label for="name">BIO</label>
-        <textarea class="form__top-input form__top-input-bio" id="bio" v-model="formInput.bio"/>
+        <textarea class="form__top-input form__top-input-bio" id="bio" v-model="formInput.bio" @input="onInput('bio', $event.target.value)"/>
         <span style="color: red;">{{ errorMessages.bio }}</span>
       </div>
 
@@ -372,7 +369,7 @@
       </div>
 
       <div class="form__button-wrapper">
-        <UIButton class="form__button" type="submit">Save changes</UIButton>
+        <UIButton :class="{'disabled': !isValid}" class="form__button" type="submit">Save changes</UIButton>
       </div>
 
     </form>
@@ -406,7 +403,7 @@ const inputValue = ref('');
 
 function clearInputValue() {
   searchQuery.value = '';
-  emit('clearInput')
+  emit('clearInput');
 }
 
 const logoSrc = new URL('../../assets/image/logo.png', import.meta.url);
@@ -455,6 +452,8 @@ const isOpenSwapPopup = ref(false);
 const isOpenDepositPopup = ref(false);
 const date = ref(new Date());
 const isOpenPopup = ref(false);
+const isValid = ref(true);
+let hasSubmitted = false;
 let openThirdPopupTimeout;
 
 function togglePopup() {
@@ -582,6 +581,7 @@ const formInput = reactive({
   bio: "",
 });
 
+
 const nameSchema = object({
   name: string().required().max(15),
 });
@@ -604,13 +604,14 @@ const bioSchema = object({
 });
 
 const validateForm = () => {
+  isValid.value = true;
 
   try {
     nameSchema.validateSync({ name: formInput.name });
     errorMessages.name = '';
   } catch (error) {
     errorMessages.name = error.message;
-    return false;
+    isValid.value = false;
   }
 
   try {
@@ -618,7 +619,7 @@ const validateForm = () => {
     errorMessages.email = '';
   } catch (error) {
     errorMessages.email = error.message;
-    return false;
+    isValid.value = false;
   }
 
   try {
@@ -626,7 +627,7 @@ const validateForm = () => {
     errorMessages.userName = '';
   } catch (error) {
     errorMessages.userName = error.message;
-    return false;
+    isValid.value = false;
   }
 
   try {
@@ -634,10 +635,18 @@ const validateForm = () => {
     errorMessages.bio = '';
   } catch (error) {
     errorMessages.bio = error.message;
-    return false;
+    isValid.value = false;
   }
 
-  return true;
+  return isValid.value;
+};
+
+const onInput = (fieldName, value) => {
+  if(hasSubmitted) {
+    formInput[fieldName] = value;
+    validateForm();
+  }
+
 };
 
 const submitForm = () => {
@@ -647,6 +656,8 @@ const submitForm = () => {
     isOpenPopup.value = false;
     togglePopup();
     localStorage.setItem('isAuthorization', 'true');
+  } else {
+    hasSubmitted = true;
   }
 };
 
@@ -902,7 +913,7 @@ function createNft() {
     span {
       position: absolute;
       left: 0;
-      bottom: -16px;
+      bottom: -20px;
     }
   }
 

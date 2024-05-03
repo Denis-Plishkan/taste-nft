@@ -46,9 +46,7 @@ let activeCard = null;
 
 onMounted(()=> {
   activeCard = props.cards[0];
-
   emits('update', activeCard);
-
 
   setTimeout(()=> {
     swipers.value = true;

@@ -1,5 +1,4 @@
 <template>
-  <div v-if="isOpenPopup" class="test"></div>
   <TheHeader @update-input-value="filterCards" @clearInput="clearHeaderInput($event)"/>
   <div class="container">
     <section class="creator">
@@ -156,6 +155,12 @@ const UiButtonArray = ['Created', 'Collected'];
 const followersButtonArray = ['Following', 'Followers'];
 
 function filterCards(value) {
+  if(value !== '') {
+    disableBodyScroll();
+  } else {
+    enableBodyScroll();
+  }
+
   inputValue.value = value;
   const query = value.toLowerCase();
   filteredCards.value = cards.filter(card => {
@@ -325,7 +330,6 @@ onMounted(() => {
 .followers {
   &__popup {
     min-height: 480px;
-    transform: translate(-50%, -20%);
   }
 
   &__wrapper {

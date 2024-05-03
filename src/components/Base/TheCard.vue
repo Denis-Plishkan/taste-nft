@@ -255,44 +255,45 @@ const scrollToTop = () => {
 
   &__info-ending-time {
     color: #fff;
+    width: 96px;
   }
 
-  &__info-sold-current {
-    margin-right: 32px;
-    color: #fff;
-  }
+&__info-sold-current {
+margin-right: 32px;
+color: #fff;
+}
 
-  &__info-name {
-    margin-bottom: 17px;
-  }
+&__info-name {
+margin-bottom: 17px;
+}
 
-  &__info-sold-wrapper {
-    margin-bottom: 15px;
-  }
+&__info-sold-wrapper {
+margin-bottom: 15px;
+}
 
-  &__wrapper-user-info {
-    gap: 8px;
-  }
+&__wrapper-user-info {
+gap: 8px;
+}
 
-  &__wrapper-image {
-    width: 26px;
-    height: 26px;
+&__wrapper-image {
+width: 26px;
+height: 26px;
 
-    img {
-      width: 100%;
-    }
-  }
+img {
+  width: 100%;
+}
+}
 }
 
 .green {
-  color: #86D084;
+color: #86D084;
 }
 
 .red {
-  color: #FF5E54;
+color: #FF5E54;
 }
 
 .yellow {
-  color: #FFBA09;
+color: #FFBA09;
 }
 </style>

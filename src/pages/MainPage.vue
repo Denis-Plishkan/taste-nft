@@ -4,7 +4,6 @@
     <section class="hero">
 
       <div v-if="inputValue" class="filtered-cards">
-        <div  >
           <div v-if="filteredCards.length > 0" class="filtered-cards__wrapper">
             <TheCard  v-for="(card, index) in filteredCards.slice(0, startCards)" :key="index" :card="card"/>
           </div>
@@ -16,8 +15,6 @@
               <p>Show all</p>
             </UIButtonShow>
           </div>
-
-        </div>
       </div>
 
       <div class="hero__wrapper">
@@ -104,7 +101,7 @@ import UIDropdown from "@/components/UI/UIDropdown.vue";
 import TheHeader from "@/components/Base/TheHeader.vue";
 import { ref } from 'vue';
 import UIButtonShow from "@/components/UI/UIButtonShow.vue";
-import UIPopup from "@/components/UI/UIPopup.vue";
+import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
 const logoSoldSrc = new URL('../assets/image/logo-sold.png', import.meta.url);
 const logoSoldSrcset = new URL('../assets/image/logo-sold.webp', import.meta.url);
@@ -157,6 +154,12 @@ function convertSoldToNumber(soldString) {
 }
 
 function filterCards(value) {
+  if(value !== '') {
+    disableBodyScroll();
+  } else {
+    enableBodyScroll();
+  }
+
   inputValue.value = value;
   const query = value.toLowerCase();
   filteredCards.value = cards.filter(card => {
@@ -333,61 +336,64 @@ function toggleDropdown(index) {
 .filtered-cards {
   width: 100%;
   transform: none;
-  padding: 30px 5px;
   background: #1d2228;
-  height: 100%;
   overflow: auto;
+  position: fixed;
+  z-index: 4;
+  height: calc(100vh - 70px);
+  left: 0;
+  right: 0;
 
-  &__wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 14px;
-    justify-content: center;
+&__wrapper {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 14px;
+justify-content: center;
 
-    h1 {
-      font-weight: 700;
-      font-size: 24px;
-    }
-  }
+h1 {
+  font-weight: 700;
+  font-size: 24px;
+}
+}
 
-  &__button {
-    margin-top: 24px;
-    text-align: center;
-    margin-bottom: 60px;
-  }
+&__button {
+margin-top: 24px;
+text-align: center;
+margin-bottom: 60px;
+}
 
 }
 
 .dropdown {
-  &__list {
-    position: absolute;
-    top: 46px;
-    z-index: 2;
-    background: #1D2228;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    box-shadow: 0 15px 30px 0 rgba(20, 102, 204, 0.16);
-    width: fit-content;
-    padding: 12px 30px;
-    font-weight: 700;
-    font-size: 14px;
-    left: 0;
-    text-align: center;
+&__list {
+position: absolute;
+top: 46px;
+z-index: 2;
+background: #1D2228;
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 20px;
+box-shadow: 0 15px 30px 0 rgba(20, 102, 204, 0.16);
+width: fit-content;
+padding: 12px 30px;
+font-weight: 700;
+font-size: 14px;
+left: 0;
+text-align: center;
 
-    li {
-      margin-top: 6px;
-    }
-  }
+li {
+  margin-top: 6px;
+}
+}
 
-  &__list-left {
-    min-width: 170px;
-  }
+&__list-left {
+min-width: 170px;
+}
 }
 
 .dropdown-item-left {
-  min-width: 170px;
-  justify-content: center;
+min-width: 170px;
+justify-content: center;
 }
 </style>
 
