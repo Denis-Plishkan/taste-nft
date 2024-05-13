@@ -2,7 +2,7 @@
   <header class="header">
     <div :class="{'header__left' : !isAuthorization, 'header__left-authorization': isAuthorization }">
       <router-link to="/">
-        <PictureComponent :srcset="logoSrcset"  :src="logoSrc" :alt="'logo'" />
+        <PictureComponent :srcset="logoSrcset"  :src="logoSrc" :alt="'logo'"  />
       </router-link>
 
       <UIInput v-model="searchQuery" @input="$emit('updateInputValue', searchQuery)" @clearInput="clearInputValue"/>
@@ -401,11 +401,6 @@ const searchQuery = ref('');
 const emit = defineEmits('clearInput');
 const inputValue = ref('');
 
-function clearInputValue() {
-  searchQuery.value = '';
-  emit('clearInput');
-}
-
 const logoSrc = new URL('../../assets/image/logo.png', import.meta.url);
 const logoSrcset = new URL('../../assets/image/logo.webp', import.meta.url);
 const logo2Src = new URL('../../assets/image/logo2.png', import.meta.url);
@@ -455,6 +450,12 @@ const isOpenPopup = ref(false);
 const isValid = ref(true);
 let hasSubmitted = false;
 let openThirdPopupTimeout;
+
+function clearInputValue() {
+  searchQuery.value = '';
+  emit('clearInput');
+  enableBodyScroll();
+}
 
 function togglePopup() {
   if(isOpenPopup.value) {

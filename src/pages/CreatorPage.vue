@@ -210,6 +210,7 @@ function closeFollowPopup() {
 }
 
 onMounted(() => {
+  enableBodyScroll();
   filterUserCard('Created');
 });
 </script>

@@ -34,6 +34,7 @@
   border-radius: 32px;
   box-shadow: 0 25px 40px 0 rgba(0, 0, 0, 0.05);
   min-width: 653px;
+  min-height: 300px;
   padding: 50px;
   z-index: 2;
   max-height: 80%;

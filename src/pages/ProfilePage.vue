@@ -156,6 +156,7 @@ function filterUserCard(item) {
 }
 
 onMounted(() => {
+  enableBodyScroll();
   filterUserCard('Created');
 });
 

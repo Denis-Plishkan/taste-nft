@@ -40,9 +40,10 @@
               <span>Description:</span> {{ data.description }}
             </p>
             <div class="nft-info__bottom">
-              <p class="nft-info__bottom-sold">
-                Sold for: <PictureComponent :srcset="logoSoldSrcset" :src="logoSoldSrc" :alt="'logo'" /> {{ data.sold }}
-              </p>
+              <div class="nft-info__bottom-sold">
+                Sold for: <PictureComponent :srcset="logoSoldSrcset" :src="logoSoldSrc" :alt="'logo'" />
+                <p>{{ data.sold }}</p>
+              </div>
               <div class="nft-info__bottom-buttons nft-info__button">
                 <router-link :to="{ path: `/artwork/${id}` }">
                   <UIButton class="nft-info__button-vue">View</UIButton>
@@ -99,7 +100,7 @@ import SwiperNft from "@/components/Reusable/SwiperNft.vue";
 import SwiperUser from "@/components/Reusable/SwiperUser.vue";
 import UIDropdown from "@/components/UI/UIDropdown.vue";
 import TheHeader from "@/components/Base/TheHeader.vue";
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import UIButtonShow from "@/components/UI/UIButtonShow.vue";
 import { enableBodyScroll, disableBodyScroll } from 'body-scroll-lock';
 
@@ -120,6 +121,10 @@ const listAuctions = ['Auctions', 'Declined', 'Process'];
 const dropdownValues = ref(['Recently added', 'Auctions']);
 const isDropdownOpen = ref([false, false]);
 let sortedCards = ref([...cards]);
+
+onMounted(() => {
+  enableBodyScroll();
+})
 
 function currentLi(item, index) {
   dropdownValues.value[index] = item;
@@ -252,6 +257,19 @@ function toggleDropdown(index) {
     justify-content: space-between;
   }
 
+  &__bottom-sold {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    gap: 10px;
+
+    p {
+      color: #fff;
+    }
+  }
+
   &__bottom-buttons {
     display: flex;
     gap: 9px;
@@ -317,7 +335,7 @@ function toggleDropdown(index) {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 14px;
+    gap: 17px;
     justify-content: center;
 
   }

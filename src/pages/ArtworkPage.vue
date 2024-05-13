@@ -160,6 +160,7 @@ let startTime = localStorage.getItem(startTimeKey) ? parseInt(localStorage.getIt
 const remainingTime = ref('loading...');
 
 onMounted(() => {
+  enableBodyScroll();
   calculateRemainingTime();
   localStorage.setItem(startTimeKey, startTime.toString());
 });
