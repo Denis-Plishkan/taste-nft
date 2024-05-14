@@ -10,7 +10,7 @@
           <div v-else class="filtered-cards__wrapper">
             <h1>There are no cards with this name</h1>
           </div>
-          <div class="filtered-cards__button">
+          <div v-if="filteredCards.length > 0" class="filtered-cards__button">
             <UIButtonShow @click="loadCards">
               <p>Show all</p>
             </UIButtonShow>
@@ -180,6 +180,7 @@ function infoActiveCard(value) {
 
 function clearHeaderInput() {
   inputValue.value = '';
+  startCards.value = 4;
 }
 
 function loadCards() {
